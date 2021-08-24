@@ -33,13 +33,13 @@ return(
                   
 
                   <h6>Sugguested Skills</h6>
-                  <button id="html" name="hehe" type="checkbox"  autocomplete="off" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-outline-primary mt-2 rounded-pill me-2">HTML <span id="htmld"></span></button>
-                  
+                  <button id="html" name="hehe" type="button"  autocomplete="off" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-outline-primary mt-2 rounded-pill me-2">HTML <span id="htmld"></span></button>
+                  <button type="button">hello</button>
                   
                 </div>
                 </div>
  {/* Modal  */}
-                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div className="modal-dialog">
                     <div className="modal-content">
                       <div className="modal-header">
