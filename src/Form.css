@@ -1,0 +1,25 @@
+#m-form
+{
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.top-50
+{
+    top: 45% !important;
+}
+.start-50
+{
+  left: 25% !important;
+}
+/* body{
+  background-image: url('back.jpg');
+  margin: 100px;
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+} */
+
+.mt-4 {
+margin-top: 2rem!important;
+}
