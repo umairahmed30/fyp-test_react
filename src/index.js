@@ -4,7 +4,10 @@ import './index.css';
 import App from './App';
 import {Form} from './Form';
 import reportWebVitals from './reportWebVitals';
+import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 import'./Form.css';
 import store from './store';
 import {Provider} from 'react-redux';  

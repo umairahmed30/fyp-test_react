@@ -4,17 +4,21 @@ import { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { incNumber,decNumber } from "./actions";
+import { type } from "jquery";
 const Unexp =()=>{
   const dispatch=useDispatch();
 
-
- const setUniValue  = (e) => {
+  const stateMaintain=useSelector((state)=>state.stateMaintain);
+  
+  const setUniValue  = (e) => {
     dispatch({type:'UNIVERSITYSTATE',payload:e.target.value});
     // dispatch({type:'NEXT1-2'});
     
     
   
   }
+  const universities=["Select University","University of the Punjab","University of Central Punjab","University of Engineering and Technology"
+,"University of Lahore",]
 
   return(
 
@@ -22,13 +26,12 @@ const Unexp =()=>{
     <div id="criteria" >
               <div className="mb-3" onChange={setUniValue}>
                 <select id="xyz" name="university" className="form-select  rounded-pill" aria-label="Default select example" required>
-                  <option value="1" selected>Select University</option>
-                  <option value="University of the Punjab">University of the Punjab</option>
-                  <option value="University of Engineering and Technology">University of Engineering and Technology</option>
-                  <option value="University of Central Punjab">University of Central Punjab</option>
-                  <option value="University of Lahore">University of Lahore</option>
-                  <option value="Government College University">Government College University</option>
-                  <option value="COMSATS">COMSATS</option>
+                {universities.map(university => (
+                      <option value={university} selected={university===stateMaintain.university}>{university}</option>
+                  
+                    ))}
+                  
+                  
                 </select>
   
               </div>
@@ -81,9 +84,7 @@ const handleOnChangeRadio2 = (e) => {
   dispatch({type:'RADIO2STATE',payload:e.target.value});
   dispatch({type:'NEXT1-2'});
   setForceReRender(!forceRerender);
-  
-
-}
+  }
 
 
 

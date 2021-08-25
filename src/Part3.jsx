@@ -1,11 +1,49 @@
 import react from "react";
 import PageShifter from "./AllContext";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 
 import { incNumber,decNumber } from "./actions";
+import { useState } from "react";
+import { type } from "jquery";
 const Part3 = ()=>{
+  const stateMaintain=useSelector((state)=>state.stateMaintain);
   const { pageno, setpageno } = react.useContext(PageShifter);
   const dispatch=useDispatch();
+  const [tempSkill,setTempSkill]=useState();
+  const [tempExp,setTempExp]=useState(0);
+  const [selected,setSelected]=useState(stateMaintain.skills);
+  const [suggested,setSuggested]=useState(["html","css","javascript","react","angular"]);
+  const addSkill = (skill,exp) => {
+
+   //setSelected( arr => [...arr, skill]); 
+   setSuggested(suggested.filter(skills=>skills!=skill));
+
+   setSelected(arr =>[...arr,
+    {
+      language: skill,
+      experience: exp,
+    }]);
+ 
+  
+  }
+  const removeSkill = (skill) => {
+
+    setSelected(selected.filter(skills=>skills.language!=skill));
+    setSuggested( arr => [...arr, skill]); 
+    
+    
+   }
+
+   const handleOnChangeBack =()=>
+   {
+     dispatch({type:'DECREMENT'});
+     dispatch({type:'SKILLSTATE',payload:selected});
+   }
+   const handleOnChangeNext =()=>
+   {
+     dispatch({type:'INCREMENT'});
+     dispatch({type:'SKILLSTATE',payload:selected});
+   }
 
 return(
     <>
@@ -15,26 +53,23 @@ return(
                 <p>From 2 to 10</p>
 
                 <div id="skillShowHide">
+                  <div className="me-2" id="selected">
+                  {selected.map(skill=>(
+                    <button className="btn btn-outline-danger mt-2 rounded-pill me-2" type="button" onClick={()=>removeSkill(skill.language)}>{skill.language}<span>({skill.experience})</span></button>
+                  ))}
 
-                <div className="me-2" id="selected">
-
-                </div>
-
-
-                <hr/>
-
-                <div id="set">
-                  
-                  {/* <div className="" role="group" aria-label="Basic checkbox toggle button group">
-                    <input type="checkbox" className="btn-check" id="btncheckaa" autocomplete="off">
-                    <label className="btn btn-outline-primary" for="btncheckaa">Checkbox 1</label>
-                  </div> */}
-
-                  
-
+                  </div>
+                  <hr/>
+                  <div id="set">
                   <h6>Sugguested Skills</h6>
-                  <button id="html" name="hehe" type="button"  autocomplete="off" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-outline-primary mt-2 rounded-pill me-2">HTML <span id="htmld"></span></button>
-                  <button type="button">hello</button>
+                  {suggested.map(skill=>(
+                    <button className="btn btn-outline-primary mt-2 rounded-pill me-2" type="button" onClick={()=>setTempSkill(skill)} data-bs-toggle="modal" data-bs-target="#exampleModal">{skill}</button>
+                  ))}
+
+
+
+
+                  {/* <button id="html" name="hehe" type="button"  autocomplete="off" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-outline-primary mt-2 rounded-pill me-2">HTML <span id="htmld"></span></button> */}
                   
                 </div>
                 </div>
@@ -48,13 +83,13 @@ return(
                       </div>
                       <div className="modal-body">
                         
-                        <div id="slider_count">Experience = <span id="sliderStatus"></span></div>
+                        <div id="slider_count">Experience = <span id="sliderStatus">{tempExp}</span></div>
                           <br/>
-                        <input type="range" className="form-range" min="0" max="10" step="1" id="customRange"/>
+                        <input type="range" className="form-range" min="0" max="10" step="1" id="customRange" value={tempExp} onChange={(e)=>setTempExp(e.target.value)}/ >
                       </div>
                       <div className="modal-footer">
         
-                        <button id="add" type="button" className="btn btn-primary mb-3 rounded-pill" data-bs-dismiss="modal">Add Experience</button>
+                        <button onClick={()=>addSkill(tempSkill,tempExp)} id="add" type="button" className="btn btn-primary mb-3 rounded-pill" data-bs-dismiss="modal">Add Experience</button>
                       </div>
                     </div>
                   </div>
@@ -79,8 +114,8 @@ return(
               <p>Please check did you enter the name correct</p>
             </div>    */}
             <br/>
-            <button onClick={()=>{dispatch(decNumber())}}  id="btn-3b" type="button" className="btn btn-primary mb-3 rounded-pill" >Back</button>
-            <button onClick={()=>{dispatch(incNumber())}}  id="btn-3" type="button" className="btn btn-primary mb-3 rounded-pill" disabled>Next</button>
+            <button onClick={handleOnChangeBack}  id="btn-3b" type="button" className="btn btn-primary mb-3 rounded-pill" >Back</button>
+            <button onClick={handleOnChangeNext}  id="btn-3" type="button" className="btn btn-primary mb-3 rounded-pill" disabled>Next</button>
 
 
 
