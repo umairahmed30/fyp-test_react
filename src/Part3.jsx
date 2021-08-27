@@ -7,12 +7,18 @@ import { useState } from "react";
 import { type } from "jquery";
 const Part3 = ()=>{
   const stateMaintain=useSelector((state)=>state.stateMaintain);
-  const { pageno, setpageno } = react.useContext(PageShifter);
+  const nextButton=useSelector((state)=>state.validateButton);
+
   const dispatch=useDispatch();
   const [tempSkill,setTempSkill]=useState();
   const [tempExp,setTempExp]=useState(0);
+  const [display,setdisplay]=useState("block");
+  const [displayS,setdisplayS]=useState("none");
+  
   const [selected,setSelected]=useState(stateMaintain.skills);
   const [suggested,setSuggested]=useState(["html","css","javascript","react","angular"]);
+  const [moreSkills,setMoreSkills]=useState([]);
+  const temp =["devops","linux","python","mysql","docker","redis","git","aws","bootstrap"];
   const addSkill = (skill,exp) => {
 
    //setSelected( arr => [...arr, skill]); 
@@ -23,6 +29,8 @@ const Part3 = ()=>{
       language: skill,
       experience: exp,
     }]);
+    nextButton.next3++;
+
  
   
   }
@@ -44,6 +52,21 @@ const Part3 = ()=>{
      dispatch({type:'INCREMENT'});
      dispatch({type:'SKILLSTATE',payload:selected});
    }
+   const displaySkills=(val)=>
+   {
+     if(val!=="")
+     {
+        setdisplay("none");
+        setdisplayS("block");
+        setMoreSkills(temp.filter(s=>s.includes(val)));
+        
+     }
+     else
+     {
+       setdisplay("block");
+       setdisplayS("none");
+     }
+   }
 
 return(
     <>
@@ -52,7 +75,7 @@ return(
                 <h5>What are your top skills?</h5>
                 <p>From 2 to 10</p>
 
-                <div id="skillShowHide">
+                <div id="skillShowHide" style={{display:display}}>
                   <div className="me-2" id="selected">
                   {selected.map(skill=>(
                     <button className="btn btn-outline-danger mt-2 rounded-pill me-2" type="button" onClick={()=>removeSkill(skill.language)}>{skill.language}<span>({skill.experience})</span></button>
@@ -100,12 +123,11 @@ return(
 
              
             <br/> 
-            <input id="search" className="form-control me-2 mb-3 rounded-pill " type="search" placeholder="Search" aria-label="Search"/>
-            <ul id="myUL" >
-              <button id="22" data-bs-toggle="modal" data-bs-target="#exampleModal"  className="btn btn-outline-primary mt-2 rounded-pill me-2">R<span id="22d"></span></button>
-           
-              <button id="test" type="checkbox"  autocomplete="off" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-outline-primary mt-2 rounded-pill me-2">Software Architecture <span id="swarchd"></span></button>
-                  
+            <input id="search"  onKeyUp={(e)=>displaySkills(e.target.value)} className="form-control me-2 mb-3 rounded-pill " type="search" placeholder="Search" aria-label="Search"/>
+            <ul id="myUL" style={{display:displayS}} >
+            {moreSkills.map(skill=>(
+                    <button className="btn btn-outline-primary mt-2 rounded-pill me-2" type="button" onClick={()=>setTempSkill(skill)} data-bs-toggle="modal" data-bs-target="#exampleModal">{skill}</button>
+                  ))}
             </ul>
             {/* <div id="no-skill" style="display: none;">
               <p id="skill-name" style="color: crimson;">
@@ -115,7 +137,7 @@ return(
             </div>    */}
             <br/>
             <button onClick={handleOnChangeBack}  id="btn-3b" type="button" className="btn btn-primary mb-3 rounded-pill" >Back</button>
-            <button onClick={handleOnChangeNext}  id="btn-3" type="button" className="btn btn-primary mb-3 rounded-pill" disabled>Next</button>
+            <button onClick={handleOnChangeNext}  id="btn-3" type="button" className="btn btn-primary mb-3 rounded-pill" disabled={nextButton.next3>=2?false:true}>Next</button>
 
 
 

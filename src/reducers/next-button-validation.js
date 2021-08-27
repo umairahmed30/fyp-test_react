@@ -1,6 +1,6 @@
 var nextButtonValidationn = {
     next1: [false,false],
-    next2: "2" 
+    next3:0 ,
   }
 
   const validateButton=(state=nextButtonValidationn,action)=>{

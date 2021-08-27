@@ -22,7 +22,7 @@ const Form= ()=>{
         <>
           <div class="container" >
               <div class="position-relative" >
-                  <form id="m-form" class="form position-absolute top-50 start-50 w-50" action="/" method="get">
+                  <form id="m-form" class="form position-absolute mt-5 top-50 start-50 w-50" action="/" method="get">
                       
                   <PageShifter.Provider value={value} >
                     
@@ -30,9 +30,9 @@ const Form= ()=>{
                     {pageNo==2&&<Part3></Part3>}
 
                     
-                    <Part4></Part4>
-                    <Part5></Part5>
-                    <Part6></Part6>
+                    {pageNo==3&&<Part4></Part4>}
+                    {pageNo==4&&<Part5></Part5>}
+                    {pageNo==5&&<Part6></Part6>}
 
                       
                       

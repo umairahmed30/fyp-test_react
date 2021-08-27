@@ -4,6 +4,10 @@ var object = {
     university:"Select University",
     transcript:"",
     skills:[],
+    salary:"",
+    name:"",
+    email:"",
+    password:"",
     
   }
 
@@ -26,6 +30,26 @@ var object = {
     else if(action.type=="SKILLSTATE")
     {
         state.skills=action.payload;
+        return state;
+    }
+    else if(action.type=="SALARYSTATE")
+    {
+        state.salary=action.payload;
+        return state;
+    }
+    else if(action.type=="NAMESTATE")
+    {
+        state.name=action.payload;
+        return state;
+    }
+    else if(action.type=="EMAILSTATE")
+    {
+        state.email=action.payload;
+        return state;
+    }
+    else if(action.type=="PASSSTATE")
+    {
+        state.password=action.payload;
         return state;
     }
     else
