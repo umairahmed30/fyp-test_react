@@ -10,7 +10,36 @@ const Part6 = ()=>{
   const handleOnChangeNext=()=>{
     dispatch({type:'INCREMENT'});
   }  
+  const sendData= async(e)=>{
+    e.preventDefault();
+    const{radio1,
+      radio2,
+      university,
+      transcript,
+      skills,
+      salary,
+      name,
+      email,
+      password,}=stateMaintain;
+    const res = await fetch("/register", { 
+      method:"Post",
+      headers:{
+      "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+      radio1,
+      radio2,
+      university,
+      transcript,
+      skills,
+      salary,
+      name,
+      email,
+      password,
+    })
+    })
 
+  }
  
 return(
     <>
@@ -35,7 +64,7 @@ return(
             <div className="mb-3">
 
               <button onClick={handleOnChangeBack} id="btn-6b" type="button" className="btn btn-primary mb-3 rounded-pill"  >Back</button>
-              <button type="submit" className="btn btn-primary mt-3  rounded-pill">Sign Up</button>
+              <button onClick={sendData} type="submit" className="btn btn-primary mt-3  rounded-pill">Sign Up</button>
             </div>
             
           </div>

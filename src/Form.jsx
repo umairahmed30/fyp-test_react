@@ -22,7 +22,7 @@ const Form= ()=>{
         <>
           <div class="container" >
               <div class="position-relative" >
-                  <form id="m-form" class="form position-absolute mt-5 top-50 start-50 w-50" action="/" method="get">
+                  <form id="m-form" class="form position-absolute mt-5 top-50 start-50 w-50"  method="post">
                       
                   <PageShifter.Provider value={value} >
                     
