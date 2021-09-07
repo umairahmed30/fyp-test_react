@@ -1,7 +1,6 @@
 import react from "react";
 import { useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import PageShifter from "./AllContext";
 const Part4 = ()=>{
 const stateMaintain=useSelector((state)=>state.stateMaintain);
 const nextButton=useSelector((state)=>state.validateButton);
@@ -50,6 +49,8 @@ const handleOnChangeNext=()=>{
 return(
     <>
     <div id="part-4" className="p-5" >
+                <h5>Ask Recommendations!</h5>
+                <p>You can ask your teachers for the recommendations for the skills which you have selected</p>
           <div id="skilset">
           {skills.map(skill=>(
                     <button onClick={()=>addSkill(skill)} className="btn btn-outline-danger mt-2 rounded-pill me-2" type="button">{skill.language}<span>({skill.experience})</span></button>
@@ -59,7 +60,7 @@ return(
           <div id="recommendations" > 
             <div className="mb-3 row g-3">
               <div className="col-auto">
-              <label for="exampleFormControlInput4" className="form-label">Enter Email address for recommendations</label>
+              <label for="exampleFormControlInput4" className="form-label">Enter your Teacher's Email address for recommendations</label>
               <input onChange={(e)=>setTempEmail(e.target.value)} type="email" className="form-control" id="exampleFormControlInput4" placeholder="name@example.com"/>
               {emailSkills.map(skill=>(
                     <button className="btn btn-outline-danger mt-2 rounded-pill me-2" type="button">{skill.language}<span>({skill.experience})</span></button>

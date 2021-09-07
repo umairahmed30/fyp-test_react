@@ -9,6 +9,52 @@ router.get("/", (req, res) => {
   res.send(`Hello world from the server rotuer js`);
 });
 
+const Job = require("../model/jobSchema");
+router.get("/home",async(req,res)=>{
+  const jobs = await Job.find();
+  
+
+    res.send(jobs); 
+});
+
+
+
+router.post("/home",async(req,res)=>{
+
+  const { title,
+    description,
+    skillsRequired,
+    minExp,
+    jobPlace, } = req.body;
+
+    const job = new Job(
+      {
+          title,
+          description,
+          skillsRequired,
+          minExp,
+          jobPlace,
+      });
+
+    // yaha pr password and cpassword ko hash karain gy
+
+    const jobRegistered = await job.save();
+    res.status(201).json({ message: "Job Registered Successfully" });
+
+
+    // if (userRegistered) {
+    //   res.status(201).json({ message: "User Registered Successfully" });
+    // } else {
+    //   res.status(500).json({ error: "Failed to registered" });
+    // }
+
+  
+
+});
+
+
+
+
 router.post("/register", async (req, res) => {
   const {radio1,
     radio2,
@@ -51,6 +97,7 @@ router.post("/register", async (req, res) => {
       const userRegistered = await user.save();
 
       res.status(201).json({ message: "User Registered Successfully" });
+
 
       // if (userRegistered) {
       //   res.status(201).json({ message: "User Registered Successfully" });

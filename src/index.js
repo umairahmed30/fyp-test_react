@@ -2,24 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {Form} from './Form';
+import {Form} from './components/Form';
 import reportWebVitals from './reportWebVitals';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { BrowserRouter} from "react-router-dom";
 
 import'./Form.css';
 import store from './store';
-import {Provider} from 'react-redux';  
+import {Provider} from 'react-redux';   
 
 store.subscribe(()=>{console.log(store.getState())})
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
+    <BrowserRouter>
     <Provider store={store}>
-    <Form/>
+    <App />
     </Provider>
+    {/* <Provider store={store}>
+    <Form/>
+    </Provider> */}
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,10 +1,10 @@
 import react from "react";
-import PageShifter from "./AllContext";
 import { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { connect } from "react-redux";
-import { incNumber,decNumber } from "./actions";
+import { incNumber,decNumber } from "../actions";
 import { type } from "jquery";
+import { Link } from "react-router-dom";
 const Unexp =()=>{
   const dispatch=useDispatch();
 

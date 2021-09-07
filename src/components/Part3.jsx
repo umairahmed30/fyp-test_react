@@ -1,14 +1,13 @@
 import react from "react";
-import PageShifter from "./AllContext";
 import { useDispatch,useSelector } from "react-redux";
 
-import { incNumber,decNumber } from "./actions";
+import { incNumber,decNumber } from "../actions";
 import { useState } from "react";
 import { type } from "jquery";
 const Part3 = ()=>{
   const stateMaintain=useSelector((state)=>state.stateMaintain);
   const nextButton=useSelector((state)=>state.validateButton);
-
+  const skillsManage=useSelector((state)=>state.skillsManage);
   const dispatch=useDispatch();
   const [tempSkill,setTempSkill]=useState();
   const [tempExp,setTempExp]=useState(0);
@@ -16,13 +15,14 @@ const Part3 = ()=>{
   const [displayS,setdisplayS]=useState("none");
   
   const [selected,setSelected]=useState(stateMaintain.skills);
-  const [suggested,setSuggested]=useState(["html","css","javascript","react","angular"]);
-  const [moreSkills,setMoreSkills]=useState([]);
-  const temp =["devops","linux","python","mysql","docker","redis","git","aws","bootstrap"];
+  const [suggested,setSuggested]=useState(skillsManage.suggested);
+  const [moreSkills,setMoreSkills]=useState(skillsManage.moreSkills);
+   const [temp,setTemp] =useState(moreSkills);
   const addSkill = (skill,exp) => {
 
    //setSelected( arr => [...arr, skill]); 
    setSuggested(suggested.filter(skills=>skills!=skill));
+   setTemp(temp.filter(skills=>skills!=skill));
 
    setSelected(arr =>[...arr,
     {
@@ -46,11 +46,19 @@ const Part3 = ()=>{
    {
      dispatch({type:'DECREMENT'});
      dispatch({type:'SKILLSTATE',payload:selected});
+     dispatch({type:'UPDATESKILLS',payload:suggested});
+     dispatch({type:'UPDATEMORESKILLS',payload:moreSkills});
+
+
    }
    const handleOnChangeNext =()=>
    {
      dispatch({type:'INCREMENT'});
      dispatch({type:'SKILLSTATE',payload:selected});
+     dispatch({type:'UPDATESKILLS',payload:suggested});
+     dispatch({type:'UPDATEMORESKILLS',payload:moreSkills});
+
+
    }
    const displaySkills=(val)=>
    {
@@ -112,7 +120,7 @@ return(
                       </div>
                       <div className="modal-footer">
         
-                        <button onClick={()=>addSkill(tempSkill,tempExp)} id="add" type="button" className="btn btn-primary mb-3 rounded-pill" data-bs-dismiss="modal">Add Experience</button>
+                        <button onClick={()=>{addSkill(tempSkill,tempExp);setdisplay("block");setdisplayS("none");}} id="add" type="button" className="btn btn-primary mb-3 rounded-pill" data-bs-dismiss="modal">Add Experience</button>
                       </div>
                     </div>
                   </div>

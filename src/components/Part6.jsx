@@ -1,15 +1,17 @@
 import react from "react";
 import { useSelector,useDispatch } from "react-redux";
+import {Link,useHistory } from "react-router-dom";
 
 const Part6 = ()=>{
   const dispatch=useDispatch();
+  const history=useHistory();
   const stateMaintain=useSelector((state)=>state.stateMaintain);
   const handleOnChangeBack=()=>{
     dispatch({type:'DECREMENT'});
   }
   const handleOnChangeNext=()=>{
     dispatch({type:'INCREMENT'});
-  }  
+  }   
   const sendData= async(e)=>{
     e.preventDefault();
     const{radio1,
@@ -38,7 +40,7 @@ const Part6 = ()=>{
       password,
     })
     })
-
+    history.push("/home");
   }
  
 return(
@@ -64,7 +66,8 @@ return(
             <div className="mb-3">
 
               <button onClick={handleOnChangeBack} id="btn-6b" type="button" className="btn btn-primary mb-3 rounded-pill"  >Back</button>
-              <button onClick={sendData} type="submit" className="btn btn-primary mt-3  rounded-pill">Sign Up</button>
+              <button onClick={sendData} type="button" className="btn btn-primary mt-3  rounded-pill">Sign Up</button>
+              
             </div>
             
           </div>
