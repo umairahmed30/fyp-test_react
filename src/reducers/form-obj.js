@@ -27,6 +27,11 @@ var object = {
         state.university=action.payload;
         return state;
     }
+    else if(action.type=="TRANSCRIPTSTATE")
+    {
+        state.transcript=action.payload;
+        return state;
+    }
     else if(action.type=="SKILLSTATE")
     {
         state.skills=action.payload;

@@ -1,9 +1,42 @@
 const jwt = require("jsonwebtoken");
 const express = require("express");
+const bcrypt = require("bcryptjs");
+const multer = require("multer");
+//const upload = multer();
 const router = express.Router();
 
 require("../db/conn");
 const User = require("../model/userSchema");
+
+// const storage  =multer.diskStorage({
+// destination: (req, file, callback)=>{ 
+// callback(nu11,"../../public/upload/");
+// }, 
+// filename:(req, file,callback) =>{ 
+// callback(nu11,file.originalname);
+// }
+
+// })
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./transcript"); //important this is a direct path fron our current file to storage location
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "--" + file.originalname);
+  },
+});
+const upload=multer({storage:fileStorageEngine});
+
+router.post("/upload",upload.single('transcript'),(req, res) => {
+  console.log("upload is hit");
+  console.log(req.file.filename, req.body);
+  res.send("single file upload sucess");
+});
+
+
+
+
+
 
 router.get("/", (req, res) => {
   res.send(`Hello world from the server rotuer js`);
@@ -12,9 +45,7 @@ router.get("/", (req, res) => {
 const Job = require("../model/jobSchema");
 router.get("/home",async(req,res)=>{
   const jobs = await Job.find();
-  
-
-    res.send(jobs); 
+  res.send(jobs); 
 });
 
 
@@ -74,10 +105,10 @@ router.post("/register", async (req, res) => {
   try {
     const userExist = await User.findOne({ email:email });
 
-    // if (userExist) {
-    //   return res.status.toString(422).json({ error: "Email already Exist" });
-    // }  
-    // else {
+    if (userExist) {
+      return res.status(422).json({ error: "Email already Exist" });
+    }  
+    else {
     //   // const user = new User(req.body).save();
       const user = new User(
         {
@@ -96,15 +127,15 @@ router.post("/register", async (req, res) => {
 
       const userRegistered = await user.save();
 
-      res.status(201).json({ message: "User Registered Successfully" });
+      //res.status(201).json({ message: "User Registered Successfully" });
 
 
-      // if (userRegistered) {
-      //   res.status(201).json({ message: "User Registered Successfully" });
-      // } else {
-      //   res.status(500).json({ error: "Failed to registered" });
-      // }
-    //}
+      if (userRegistered) {
+        res.status(201).json({ message: "User Registered Successfully" });
+      } else {
+        res.status(500).json({ error: "Failed to registered" });
+      }
+    }
   } catch (error) {
     console.log(error);
   }
@@ -158,9 +189,11 @@ router.post("/login", async (req, res) => {
     if (userLogin) {
       const isMatch = await bcrypt.compare(password, userLogin.password);
 
+    
       // Generate Web Tokens for security
       const token = await userLogin.generateAuthToken();
       console.log(token);
+
 
       // Generate cookies
       res.cookie("jwtoken", token, {
@@ -169,8 +202,8 @@ router.post("/login", async (req, res) => {
       });
       // if (!userlogin)
       if (!isMatch)
-        res.status(400).json({ error: "Invalid login Credentials pass" });
-      else res.json({ message: "User Signin Successfully" });
+      res.status(400).json({ error: "Invalid login Credentials pass" });
+   else res.json({ message: "User Signin Successfully" });
     } else {
       res.status(400).json({ error: "Invalid login Credentials" });
     }

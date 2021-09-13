@@ -46,7 +46,7 @@ const Unexp =()=>{
               <div className="mb-3">
                 <label for="myfile">Upload Your Transcript </label>
                 <br/>
-                <input className="form-control  rounded-pill" type="file" id="myfile" name="myfile"/>
+                <input onClick={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.name})}} className="form-control  rounded-pill" type="file" id="myfile" name="transcript"/>
                 
   
               </div>
@@ -66,12 +66,23 @@ const [disable,setdisable]=useState(true);
 const [forceRerender,setForceReRender]=useState(false)
 const stateMaintain=useSelector((state)=>state.stateMaintain);
 const nextButton=useSelector((state)=>state.validateButton);
-    
+const [transcript,setTranscript]=useState("");
 const dispatch=useDispatch();
-
 const valr1=["internee","fresher","experienced"];
-
 const valr2=["anywhere","remote","office"];
+
+const uploadImage= async(e)=>{
+  e.preventDefault();
+  
+  const res = await fetch("/upload", { 
+    method:"Post",
+    headers:{
+    "Content-type": "application/json"
+    },
+  
+  })
+  
+}
 
 const handleOnChangeRadio1 = (e) => {
    dispatch({type:'RADIO1STATE',payload:e.target.value});
@@ -140,7 +151,7 @@ const handleOnChangeRadio2 = (e) => {
                 </div>
 
                 
-              <button onClick={()=>{dispatch({type:'INCREMENT'})}} id="btn-1" type="submit" className="btn btn-primary rounded-pill mt-4" disabled={nextButton.next1[0]&&nextButton.next1[1]?false:true} >Next</button>
+              <button onClick={(e)=>{dispatch({type:'INCREMENT'});uploadImage(e)}} id="btn-1" type="submit" className="btn btn-primary rounded-pill mt-4" disabled={nextButton.next1[0]&&nextButton.next1[1]?false:true} >Next</button>
               </div>
 
 

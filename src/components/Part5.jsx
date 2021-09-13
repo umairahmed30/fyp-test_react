@@ -6,7 +6,7 @@ const Part5 = ()=>{
 
   const dispatch=useDispatch();
   const stateMaintain=useSelector((state)=>state.stateMaintain);
-  const [tempSal,setTempSal]=useState(0);
+  const [tempSal,setTempSal]=useState(stateMaintain.salary);
 
   const handleOnChangeBack=()=>{
     dispatch({type:'DECREMENT'});

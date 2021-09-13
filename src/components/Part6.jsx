@@ -46,9 +46,35 @@ const Part6 = ()=>{
 return(
     <>
     <div id="part-6" className="p-5"  >
+      <div>
             <h6 className="text-center">Last Step:)</h6>
             <h4 className="text-center">You will be anonymous for companies</h4>
             <br/>
+            <div className="mb-3" >
+            <table class="table table-sm">
+  <thead>
+    <tr>
+      
+      <th scope="col">Position</th>
+      <th scope="col">Job Type</th>
+      <th scope="col">Skills</th>
+      <th scope="col">Salary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{stateMaintain.radio1}</td>
+      <td>{stateMaintain.radio2}</td>
+      <td>skills</td>
+      <td>{stateMaintain.salary}</td>
+    </tr>
+
+   
+  </tbody>
+</table>
+
+            </div>
+            </div>
             <br/>
             <div className="mb-3">
               <label for="exampleFormControlInput0" className="form-label">Name</label>
