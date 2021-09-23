@@ -4,7 +4,7 @@ var object = {
     university:"Select University",
     transcript:"",
     skills:[],
-    salary:"",
+    salary:"10000",
     name:"",
     email:"",
     password:"",

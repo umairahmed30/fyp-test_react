@@ -86,7 +86,7 @@ return(
                 <div id="skillShowHide" style={{display:display}}>
                   <div className="me-2" id="selected">
                   {selected.map(skill=>(
-                    <button className="btn btn-outline-danger mt-2 rounded-pill me-2" type="button" onClick={()=>removeSkill(skill.language)}>{skill.language}<span>({skill.experience})</span></button>
+                    <button className="btn btn-outline-danger mt-2 rounded-pill me-2" type="button" onClick={()=>removeSkill(skill.language)}>{skill.language+" "}<span>({skill.experience})</span></button>
                   ))}
 
                   </div>
@@ -145,7 +145,7 @@ return(
             </div>    */}
             <br/>
             <button onClick={handleOnChangeBack}  id="btn-3b" type="button" className="btn btn-primary mb-3 rounded-pill" >Back</button>
-            <button onClick={handleOnChangeNext}  id="btn-3" type="button" className="btn btn-primary mb-3 rounded-pill" disabled={nextButton.next3>=2?false:true}>Next</button>
+            <button onClick={handleOnChangeNext}  id="btn-3" type="button" className="btn btn-primary ms-2 mb-3 rounded-pill" disabled={nextButton.next3>=2?false:true}>Next</button>
 
 
 

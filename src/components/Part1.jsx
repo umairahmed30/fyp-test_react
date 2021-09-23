@@ -20,6 +20,21 @@ const Unexp =()=>{
   const universities=["Select University","University of the Punjab","University of Central Punjab","University of Engineering and Technology"
 ,"University of Lahore",]
 
+const uploadImage= async(e)=>{
+  e.preventDefault();
+
+  
+  stateMaintain.transcript=new FormData();
+  stateMaintain.transcript.append("transcript", e.target.files[0]);
+
+  
+ 
+
+  
+  
+  
+}
+
   return(
 
     <>
@@ -46,7 +61,7 @@ const Unexp =()=>{
               <div className="mb-3">
                 <label for="myfile">Upload Your Transcript </label>
                 <br/>
-                <input onClick={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.name})}} className="form-control  rounded-pill" type="file" id="myfile" name="transcript"/>
+                <input onChange={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.name});uploadImage(e)}} className="form-control  rounded-pill" type="file" id="myfile" name="transcript"/>
                 
   
               </div>
@@ -71,18 +86,20 @@ const dispatch=useDispatch();
 const valr1=["internee","fresher","experienced"];
 const valr2=["anywhere","remote","office"];
 
-const uploadImage= async(e)=>{
-  e.preventDefault();
+// const uploadImage= async(e)=>{
+//   e.preventDefault();
+
+//   let formdata=new FormData();
+//   formdata.append("userfile", e.target.files[0]);
+
   
-  const res = await fetch("/upload", { 
-    method:"Post",
-    headers:{
-    "Content-type": "application/json"
-    },
+//   const res = await fetch("/upload", { 
+//     method:"Post",
+//     body:formdata,
   
-  })
+//   })
   
-}
+// }
 
 const handleOnChangeRadio1 = (e) => {
    dispatch({type:'RADIO1STATE',payload:e.target.value});
@@ -125,8 +142,9 @@ const handleOnChangeRadio2 = (e) => {
               </div>
               </div>
               <br/>
+              <form action="">
               {stateMaintain.radio1===valr1[0]||stateMaintain.radio1===valr1[1]? <Unexp/>:<div/> }
-            
+              </form>
 
               <h4>Where do you want to work?</h4>
               <div id="radio-2" onChange={handleOnChangeRadio2}>
@@ -151,7 +169,7 @@ const handleOnChangeRadio2 = (e) => {
                 </div>
 
                 
-              <button onClick={(e)=>{dispatch({type:'INCREMENT'});uploadImage(e)}} id="btn-1" type="submit" className="btn btn-primary rounded-pill mt-4" disabled={nextButton.next1[0]&&nextButton.next1[1]?false:true} >Next</button>
+              <button onClick={(e)=>{dispatch({type:'INCREMENT'});}} id="btn-1" type="submit" className="btn btn-primary rounded-pill mt-4" disabled={nextButton.next1[0]&&nextButton.next1[1]?false:true} >Next</button>
               </div>
 
 

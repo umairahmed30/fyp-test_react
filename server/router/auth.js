@@ -29,7 +29,7 @@ const upload=multer({storage:fileStorageEngine});
 
 router.post("/upload",upload.single('transcript'),(req, res) => {
   console.log("upload is hit");
-  console.log(req.file.filename, req.body);
+  //console.log(req.file.filename, req.body);
   res.send("single file upload sucess");
 });
 

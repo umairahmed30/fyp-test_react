@@ -144,7 +144,7 @@ return(
             
             </div>
             <button id="btn-4b" onClick={handleOnChangeBack} type="button" className="btn btn-primary mb-3 mt-3 rounded-pill"  >Back</button>
-            <button id="btn-4" onClick={handleOnChangeNext} className="btn btn-outline-primary mb-3 mt-3 rounded-pill">Next</button>
+            <button id="btn-4" onClick={handleOnChangeNext} className="btn btn-outline-primary mb-3 mt-3 ms-2 rounded-pill">Next</button>
           </div>
       </>
 );

@@ -43,6 +43,7 @@ const [jobList,setJobList]=useState([]);
   <div className="col-sm-9 m-1 p-2">
   <div className="card">
     <div className="card-body">
+      <h1>{job._id}</h1>
       <h5 className="card-title">{job.title}</h5>
       <p className="card-text">{job.description}</p>
       <a href="#" className="btn btn-primary">Apply</a>
