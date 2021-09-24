@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import {Link,useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import validator from 'validator';
 
 const Part6 = ()=>{
   const [nameError,setNameError]=useState("");
@@ -15,6 +16,10 @@ const Part6 = ()=>{
   const dispatch=useDispatch();
   const history=useHistory();
   const stateMaintain=useSelector((state)=>state.stateMaintain);
+  const transcMaintain=useSelector((state)=>state.transcMaintain);
+  const stateRecommendation=useSelector((state)=>state.stateRecommendation);
+
+
   const handleOnChangeBack=()=>{
     dispatch({type:'DECREMENT'});
   }
@@ -33,17 +38,28 @@ const Part6 = ()=>{
       setNameError("");
 
     }
-
-    if (!stateMaintain.email.includes("@")) {
-      setEmailError("*invalid email");
-      console.log(emailError);
-      return false;
+    if (validator.isEmail(stateMaintain.email) === true)
+    {
+      console.log("Valid email.")
+      setEmailError("");
     }
     else
     {
-      setEmailError("");
-
+      setEmailError("Please enter a valid Email!");
+      console.log("Invalid email.");
+      return false;
     }
+
+    // if (!stateMaintain.email.includes("@")) {
+    //   setEmailError("*invalid email");
+    //   console.log(emailError);
+    //   return false;
+    // }
+    // else
+    // {
+    //   setEmailError("");
+
+    // }
     // if (typeof input["email"] !== "undefined") {
           
     //   var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
@@ -65,9 +81,16 @@ const Part6 = ()=>{
    e.preventDefault();
 
     if(validate()){
+      const sendMail = await fetch("/sendEmail", { 
+        method:"Post",
+        headers:{
+          "Content-type": "application/json"
+          },
+        body: JSON.stringify({stateRecommendation}),
+      
+      })
     const resFile = await fetch("/upload", { 
       method:"Post",
-      body:stateMaintain.transcript,
     
     })
     const{radio1,

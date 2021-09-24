@@ -1,7 +1,7 @@
 var object = {
     radio1: "1",
     radio2: "2" ,
-    university:"Select University",
+    university:"",
     transcript:"",
     skills:[],
     salary:"10000",

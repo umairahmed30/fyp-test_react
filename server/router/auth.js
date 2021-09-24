@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const multer = require("multer");
+var nodemailer = require('nodemailer');
 //const upload = multer();
 const router = express.Router();
 
@@ -31,6 +32,40 @@ router.post("/upload",upload.single('transcript'),(req, res) => {
   console.log("upload is hit");
   //console.log(req.file.filename, req.body);
   res.send("single file upload sucess");
+});
+
+router.post("/sendEmail",(req, res) => {
+  const recommDetails=req.body;
+  console.log(recommDetails.stateRecommendation.state);
+// var transport = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'fypjobportal@gmail.com',
+//     pass: 'fypjobportal123'
+//   },
+//   tls:
+//   {
+//       rejectUnauthorized:false,
+//   },
+
+// });
+
+// var mailOptions = {
+//   from: 'fypjobportal@gmail.com',
+//   to: 'uahmed630@gmail.com',
+//   subject: 'Sending Email using Node.js',
+//   text: 'First Email sent from Node.js using Nodemailer!'
+// };
+
+
+
+// transport.sendMail(mailOptions, function(error, info){
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+// });
 });
 
 

@@ -5,10 +5,16 @@ import { connect } from "react-redux";
 import { incNumber,decNumber } from "../actions";
 import { type } from "jquery";
 import { Link } from "react-router-dom";
-const Unexp =()=>{
+const Unexp =(props)=>{
   const dispatch=useDispatch();
 
   const stateMaintain=useSelector((state)=>state.stateMaintain);
+  const transcMaintain=useSelector((state)=>state.transcMaintain);
+
+  const [uni,setUni]=useState(stateMaintain.university);
+
+
+
   
   const setUniValue  = (e) => {
     dispatch({type:'UNIVERSITYSTATE',payload:e.target.value});
@@ -17,15 +23,15 @@ const Unexp =()=>{
     
   
   }
-  const universities=["Select University","University of the Punjab","University of Central Punjab","University of Engineering and Technology"
+  const universities=["University of the Punjab","University of Central Punjab","University of Engineering and Technology"
 ,"University of Lahore",]
 
 const uploadImage= async(e)=>{
   e.preventDefault();
 
   
-  stateMaintain.transcript=new FormData();
-  stateMaintain.transcript.append("transcript", e.target.files[0]);
+  transcMaintain.transc=new FormData();
+  transcMaintain.transc.append("transcript", e.target.files[0]);
 
   
  
@@ -39,29 +45,21 @@ const uploadImage= async(e)=>{
 
     <>
     <div id="criteria" >
-              <div className="mb-3" onChange={setUniValue}>
-                <select id="xyz" name="university" className="form-select  rounded-pill" aria-label="Default select example" required>
-                {universities.map(university => (
-                      <option value={university} selected={university===stateMaintain.university}>{university}</option>
-                  
-                    ))}
-                  
-                  
-                </select>
-  
-              </div>
-              <div className="mb-3">
-                <p  id="uni">Couldn't find your university?</p>
+                          <div className="mb-3"  onChange={setUniValue}>
+                          <label className="mb-2" for="ice-cream-choice">Please Enter your University Name <span style={{color:"red"}}>{props.uniErr}</span></label>
+                          <input onChange={(e)=>{setUni(e.target.value)}} className="form-select  rounded-pill" list="university-list" id="ice-cream-choice" name="ice-cream-choice" value={uni} />
 
-              </div>
+                          <datalist  id="university-list">
+                          {universities.map(university => (
+                          <option value={university}>{university}</option>
+                          ))}
+                          </datalist>
+                          </div>
+            
+             
               <div className="mb-3">
-                <input className="form-control" type="text" name="" id="inp"/>
-
-              </div>
-              <div className="mb-3">
-                <label for="myfile">Upload Your Transcript </label>
-                <br/>
-                <input onChange={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.name});uploadImage(e)}} className="form-control  rounded-pill" type="file" id="myfile" name="transcript"/>
+                <label className="mb-2" for="myfile">Upload Your Transcript <span style={{color:"red"}}>{props.transErr}</span> </label>
+                <input onChange={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.files[0].name});uploadImage(e)}} className="form-control  rounded-pill" type="file" id="myfile"/>
                 
   
               </div>
@@ -85,6 +83,9 @@ const [transcript,setTranscript]=useState("");
 const dispatch=useDispatch();
 const valr1=["internee","fresher","experienced"];
 const valr2=["anywhere","remote","office"];
+const [uniError,setUniError]=useState("");
+const [transError,setTransError]=useState("");
+
 
 // const uploadImage= async(e)=>{
 //   e.preventDefault();
@@ -113,6 +114,45 @@ const handleOnChangeRadio2 = (e) => {
   dispatch({type:'NEXT1-2'});
   setForceReRender(!forceRerender);
   }
+  const validateP1 = (e) => {
+    if(stateMaintain.radio1!=="experienced")
+    {
+      if(stateMaintain.university==="")
+      {
+        setUniError("*");
+      }
+      else if(stateMaintain.transcript==="")
+      {
+        setTransError("*");
+      }
+      // else if(stateMaintain.transcript!=="")
+      // {
+      //   const transcript=stateMaintain.transcript
+      //   var allowedFiles = [".doc", ".docx", ".pdf"];
+      //   //var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+      //   var regex =new RegExp("/\.pdf$/");
+      //   if (!regex.test(transcript.toString().toLowerCase())) {
+      //       setTransError( "Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
+      //   }
+      //   else
+      //   {
+      //     console.log("hello");
+      //     dispatch({type:'INCREMENT'})
+
+      //   }
+        
+
+      // }
+      else
+      {
+      dispatch({type:'INCREMENT'})
+      }
+    }
+    else
+    {
+      dispatch({type:'INCREMENT'})
+    }
+    }
 
 
 
@@ -143,7 +183,7 @@ const handleOnChangeRadio2 = (e) => {
               </div>
               <br/>
               <form action="">
-              {stateMaintain.radio1===valr1[0]||stateMaintain.radio1===valr1[1]? <Unexp/>:<div/> }
+              {stateMaintain.radio1===valr1[0]||stateMaintain.radio1===valr1[1]? <Unexp uniErr={uniError} transErr={transError}/>:<div/> }
               </form>
 
               <h4>Where do you want to work?</h4>
@@ -169,7 +209,7 @@ const handleOnChangeRadio2 = (e) => {
                 </div>
 
                 
-              <button onClick={(e)=>{dispatch({type:'INCREMENT'});}} id="btn-1" type="submit" className="btn btn-primary rounded-pill mt-4" disabled={nextButton.next1[0]&&nextButton.next1[1]?false:true} >Next</button>
+              <button onClick={(e)=>{validateP1(e)}} id="btn-1" type="button" className="btn btn-primary rounded-pill mt-4" disabled={nextButton.next1[0]&&nextButton.next1[1]?false:true} >Next</button>
               </div>
 
 

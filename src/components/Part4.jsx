@@ -72,9 +72,11 @@ const addSkill = (skill) => {
 };
 
 const handleOnChangeBack=()=>{
+  dispatch({type:'ADD_RECOMM_DETAILS',payload:rTable});
   dispatch({type:'DECREMENT'});
 }
 const handleOnChangeNext=()=>{
+  dispatch({type:'ADD_RECOMM_DETAILS',payload:rTable});
   dispatch({type:'INCREMENT'});
 }
 
