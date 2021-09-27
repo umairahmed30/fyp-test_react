@@ -32,9 +32,7 @@ const uploadImage= async(e)=>{
   
   transcMaintain.transc=new FormData();
   transcMaintain.transc.append("transcript", e.target.files[0]);
-
-  
- 
+ props.setTransError("");
 
   
   
@@ -57,9 +55,10 @@ const uploadImage= async(e)=>{
                           </div>
             
              
-              <div className="mb-3">
+              <div className="mb-3" style={{display:props.displayInputFile}}>
+                
                 <label className="mb-2" for="myfile">Upload Your Transcript <span style={{color:"red"}}>{props.transErr}</span> </label>
-                <input onChange={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.files[0].name});uploadImage(e)}} className="form-control  rounded-pill" type="file" id="myfile"/>
+                <input onChange={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.files[0].name});uploadImage(e)}} className="form-control form-control-sm rounded-pill" type="file" id="myfile" />
                 
   
               </div>
@@ -79,12 +78,14 @@ const [disable,setdisable]=useState(true);
 const [forceRerender,setForceReRender]=useState(false)
 const stateMaintain=useSelector((state)=>state.stateMaintain);
 const nextButton=useSelector((state)=>state.validateButton);
+const inputFileDisplay=useSelector((state)=>state.inputFileDisplay);
 const [transcript,setTranscript]=useState("");
 const dispatch=useDispatch();
 const valr1=["internee","fresher","experienced"];
 const valr2=["anywhere","remote","office"];
 const [uniError,setUniError]=useState("");
 const [transError,setTransError]=useState("");
+const [displayInputFile,setDisplayInputFile]=useState(inputFileDisplay.fileD);
 
 
 // const uploadImage= async(e)=>{
@@ -121,35 +122,46 @@ const handleOnChangeRadio2 = (e) => {
       {
         setUniError("*");
       }
-      else if(stateMaintain.transcript==="")
+      else
+      {
+        setUniError("");
+      }
+      if(stateMaintain.transcript==="")
       {
         setTransError("*");
       }
-      // else if(stateMaintain.transcript!=="")
-      // {
-      //   const transcript=stateMaintain.transcript
-      //   var allowedFiles = [".doc", ".docx", ".pdf"];
-      //   //var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
-      //   var regex =new RegExp("/\.pdf$/");
-      //   if (!regex.test(transcript.toString().toLowerCase())) {
-      //       setTransError( "Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
-      //   }
-      //   else
-      //   {
-      //     console.log("hello");
-      //     dispatch({type:'INCREMENT'})
+      else if(stateMaintain.transcript!=="")
+      {
+        const transcript=stateMaintain.transcript
+        var allowedFiles = [".doc", ".docx", ".pdf"];
+        var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+        //var regex =new RegExp("/\.pdf$/");
+        if (!regex.test(transcript.toString().toLowerCase())) {
+            setTransError( "Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
+        }
+        else
+        {
+          console.log("hello");
+          
+          setDisplayInputFile("none");
+          setForceReRender(!forceRerender);
 
-      //   }
+          dispatch({type:'FILEDISPLAY',payload:"none"});
+          dispatch({type:'INCREMENT'});
+
+        }
         
 
-      // }
+      }
       else
       {
+      setDisplayInputFile("none");
       dispatch({type:'INCREMENT'})
       }
     }
     else
     {
+      setDisplayInputFile("none");
       dispatch({type:'INCREMENT'})
     }
     }
@@ -183,7 +195,7 @@ const handleOnChangeRadio2 = (e) => {
               </div>
               <br/>
               <form action="">
-              {stateMaintain.radio1===valr1[0]||stateMaintain.radio1===valr1[1]? <Unexp uniErr={uniError} transErr={transError}/>:<div/> }
+              {stateMaintain.radio1===valr1[0]||stateMaintain.radio1===valr1[1]? <Unexp uniErr={uniError} transErr={transError} displayInputFile={displayInputFile} setDisplayInputFile={setDisplayInputFile} setTransError={setTransError}/>:<div/> }
               </form>
 
               <h4>Where do you want to work?</h4>

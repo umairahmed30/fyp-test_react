@@ -81,18 +81,8 @@ const Part6 = ()=>{
    e.preventDefault();
 
     if(validate()){
-      const sendMail = await fetch("/sendEmail", { 
-        method:"Post",
-        headers:{
-          "Content-type": "application/json"
-          },
-        body: JSON.stringify({stateRecommendation}),
       
-      })
-    const resFile = await fetch("/upload", { 
-      method:"Post",
-    
-    })
+   
     const{radio1,
       radio2,
       university,
@@ -118,9 +108,26 @@ const Part6 = ()=>{
       email,
       password,
     })
-    })
+    });
+   
     try{
       const data = await res.json();
+      if(res.status===201)
+      {
+        const resFile = await fetch("/upload", { 
+          method:"Post",
+        
+        });
+        const sendMail = await fetch("/sendEmail", { 
+          method:"Post",
+          headers:{
+            "Content-type": "application/json"
+            },
+          body: JSON.stringify({stateRecommendation}),
+        
+        });
+       
+      }
     if (res.status === 422) {
     console.log(data.error);
     setEmailError("*"+data.error);
@@ -130,6 +137,7 @@ const Part6 = ()=>{
   }catch(err){
     console.log(err);
   }
+  
     //history.push("/home");
   }
   }
@@ -139,7 +147,7 @@ return(
     <div id="part-6" className="p-5"  >
       <div>
             <h6 className="text-center">Last Step:)</h6>
-            <h4 className="text-center">You will be anonymous for companies</h4>
+            <h4 className="text-center">Let's get over with it</h4>
             <br/>
             <div className="mb-3" >
             <table class="table table-sm">

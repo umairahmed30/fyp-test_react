@@ -4,6 +4,7 @@ import validateButton from "./next-button-validation";
 import skillsManage from "./skills";
 import transcMaintain from "./forTransc";
 import stateRecommendation from "./forRecommendations";
+import inputFileDisplay from "./display";
 
 import { combineReducers } from "redux";
 const rootReducer=combineReducers({
@@ -13,6 +14,7 @@ const rootReducer=combineReducers({
     skillsManage,
     transcMaintain,
     stateRecommendation,
+    inputFileDisplay,
 })
 
 export default rootReducer;

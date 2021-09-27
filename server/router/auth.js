@@ -36,36 +36,43 @@ router.post("/upload",upload.single('transcript'),(req, res) => {
 
 router.post("/sendEmail",(req, res) => {
   const recommDetails=req.body;
-  console.log(recommDetails.stateRecommendation.state);
-// var transport = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: 'fypjobportal@gmail.com',
-//     pass: 'fypjobportal123'
-//   },
-//   tls:
-//   {
-//       rejectUnauthorized:false,
-//   },
+  const details=recommDetails.stateRecommendation.state;
+  console.log(details);
+  details.forEach(function (detail) {
+    var transport = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'fypjobportal@gmail.com',
+    pass: 'fypjobportal123'
+  },
+  tls:
+  {
+      rejectUnauthorized:false,
+  },
 
-// });
+});
 
-// var mailOptions = {
-//   from: 'fypjobportal@gmail.com',
-//   to: 'uahmed630@gmail.com',
-//   subject: 'Sending Email using Node.js',
-//   text: 'First Email sent from Node.js using Nodemailer!'
-// };
+var mailOptions = {
+  from: 'fypjobportal@gmail.com',
+  to: detail.email,
+  subject: 'Sending Email using Node.js',
+  text: 'First Email sent from Node.js using Nodemailer!'
+};
 
 
 
-// transport.sendMail(mailOptions, function(error, info){
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     console.log('Email sent: ' + info.response);
-//   }
-// });
+transport.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+    res.status(201).json({ message: "Email sent Successfully" });
+  }
+});
+   
+    
+});
+
 });
 
 
