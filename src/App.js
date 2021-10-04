@@ -5,6 +5,7 @@ import { SignIn } from './components/SignIn';
 import { Route, Switch } from "react-router-dom"; 
 
 import './App.css';
+import Recommendation from './components/Recommendation';
 
 const Routing = () => {
   
@@ -19,6 +20,9 @@ const Routing = () => {
       </Route>
       <Route exact path="/signin">
         <SignIn/>
+      </Route>
+      <Route path="/recommendation/:email">
+        <Recommendation/>
       </Route>
 
      

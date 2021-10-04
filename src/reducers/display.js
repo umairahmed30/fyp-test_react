@@ -1,5 +1,6 @@
 var object={fileD:"block",
-            emailD:"inline-block"};
+            emailD:"inline-block",
+            emailCount:0};
 
 const inputFileDisplay=(state=object,action)=>{
     if(action.type=="FILEDISPLAY")

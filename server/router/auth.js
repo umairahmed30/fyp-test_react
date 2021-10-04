@@ -36,7 +36,7 @@ router.post("/upload",upload.single('transcript'),(req, res) => {
 
 router.post("/sendEmail",(req, res) => {
   const recommDetails=req.body;
-  const details=recommDetails.stateRecommendation.state;
+  const details=recommDetails.stateRecommendation;
   console.log(details);
   details.forEach(function (detail) {
     var transport = nodemailer.createTransport({
@@ -51,12 +51,14 @@ router.post("/sendEmail",(req, res) => {
   },
 
 });
-
+var h="hellotalha"
+const welcomeEmail = () => `<a href="http://localhost:3000/recommendation/${h}" >Welcome</a>`
 var mailOptions = {
   from: 'fypjobportal@gmail.com',
   to: detail.email,
   subject: 'Sending Email using Node.js',
-  text: 'First Email sent from Node.js using Nodemailer!'
+  text: 'First Email sent from Node.js using Nodemailer!',
+  html: welcomeEmail(),
 };
 
 
