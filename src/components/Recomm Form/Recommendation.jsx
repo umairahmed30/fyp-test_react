@@ -1,5 +1,5 @@
 import React from 'react'
-import "./form.scss";
+import "./Rform.scss";
 import { useParams } from 'react-router-dom';
 const Recommendation = () => {
     const {email}=useParams();
