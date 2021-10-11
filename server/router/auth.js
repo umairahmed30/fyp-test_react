@@ -37,7 +37,9 @@ router.post("/upload",upload.single('transcript'),(req, res) => {
 router.post("/sendEmail",(req, res) => {
   const recommDetails=req.body;
   const details=recommDetails.stateRecommendation;
+  const stateMaintain =recommDetails.stateMaintain;
   console.log(details);
+  console.log(stateMaintain.email);
   details.forEach(function (detail) {
     var transport = nodemailer.createTransport({
   service: 'gmail',
@@ -51,14 +53,13 @@ router.post("/sendEmail",(req, res) => {
   },
 
 });
-var h="hellotalha"
-const welcomeEmail = () => `<a href="http://localhost:3000/recommendation/${h}" >Welcome</a>`
+const welcome_email = () => `<a href="http://localhost:3000/recommendation/${stateMaintain.email}" >Welcome</a>`
 var mailOptions = {
   from: 'fypjobportal@gmail.com',
   to: detail.email,
   subject: 'Sending Email using Node.js',
   text: 'First Email sent from Node.js using Nodemailer!',
-  html: welcomeEmail(),
+  html: welcome_email(),
 };
 
 
@@ -90,6 +91,49 @@ const Job = require("../model/jobSchema");
 router.get("/home",async(req,res)=>{
   const jobs = await Job.find();
   res.send(jobs); 
+});
+
+
+
+const Question = require("../model/questionSchema");
+router.get("/getquestion",async(req,res)=>{
+  const questions = await Question.find();
+  res.send(questions); 
+});
+
+
+
+
+
+router.post("/findUser",async(req,res)=>{
+  const email=req.body.email;
+  const users = await User.find({email:email});
+  res.send(users); 
+});
+
+
+router.post("/addQuestion",async(req,res)=>{
+
+  const { question } = req.body;
+
+    const question1 = new Question(
+      {
+          question
+      });
+
+
+    const questionAdded = await question1.save();
+    res.status(201).json({ message: "Question Added Successfully" });
+
+
+    // if (userRegistered) {
+    //   res.status(201).json({ message: "User Registered Successfully" });
+    // } else {
+    //   res.status(500).json({ error: "Failed to registered" });
+    // }
+
+  
+
 });
 
 
@@ -134,6 +178,8 @@ router.post("/register", async (req, res) => {
   const {radio1,
     radio2,
     university,
+    cgpa,
+    degree,
     transcript,
     skills,
     salary,
@@ -159,6 +205,8 @@ router.post("/register", async (req, res) => {
         radio1,
         radio2,
         university,
+        cgpa,
+        degree,
         transcript,
         skills,
         salary,
@@ -255,4 +303,7 @@ router.post("/login", async (req, res) => {
     console.log(error);
   }
 });
+
+
+
 module.exports = router;

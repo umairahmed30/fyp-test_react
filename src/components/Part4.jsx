@@ -2,6 +2,9 @@ import react from "react";
 import { useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import validator from 'validator';
+import { FaEdit } from 'react-icons/fa';
+import { MdDeleteOutline } from 'react-icons/md';
+
 const Part4 = ()=>{
 const stateMaintain=useSelector((state)=>state.stateMaintain);
 const nextButton=useSelector((state)=>state.validateButton);
@@ -136,7 +139,7 @@ return(
             <div className="mb-3 row g-3" style={{display:display}}>
               <div className="col-auto">
                 <label for="exampleFormControlInput4" className="form-label">Enter your Teacher's Email address for recommendations</label>
-                <input onChange={(e)=>{setTempEmail(e.target.value);setTempo(e.target.value)}} type="email" className="form-control" id="exampleFormControlInput4" placeholder="name@example.com"value={tempo}/>
+                <input onChange={(e)=>{setTempEmail(e.target.value);setTempo(e.target.value)}} type="email" className="form-control rounded-pill" id="exampleFormControlInput4" placeholder="name@example.com"value={tempo}/>
                 <button onClick={addJson} id="email-btn-1" type="button" className="btn btn-primary mt-4 rounded-pill"  >Add</button>
               
             
@@ -169,8 +172,8 @@ return(
       <td>{r.email}</td>
       <td>{r.rskill.map(skill=>(<span>{skill.language+" "}</span>))}</td>
       <td>
-        <button id="" type="button" className="btn btn-success rounded-pill btn-sm me-1"  onClick={(e)=>{e.preventDefault();RSkill(r.email);editRecommendation(r.rskill);setTempo(r.email);setTempEmail(r.email)}}>Edit</button>
-        <button id="" type="button" className="btn btn-danger rounded-pill btn-sm" onClick={()=>{RSkill(r.email)}}  >Delete</button>
+        <button id="" type="button" className="btn me-1"  onClick={(e)=>{e.preventDefault();RSkill(r.email);editRecommendation(r.rskill);setTempo(r.email);setTempEmail(r.email)}}><FaEdit/></button>
+        <button id="" type="button" className="btn" onClick={()=>{RSkill(r.email)}}  ><MdDeleteOutline/></button>
       </td>
     </tr>))}
 

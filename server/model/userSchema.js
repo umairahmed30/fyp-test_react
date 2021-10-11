@@ -14,7 +14,13 @@ const userSchema = new mongooose.Schema({
   },
   university: {
     type: String,
-    required: true,
+    //required: true,
+  },
+  cgpa:{
+    type: String,
+  },
+  degree:{
+    type: String,
   },
   transcript: {
     type: String,

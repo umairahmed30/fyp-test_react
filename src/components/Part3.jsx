@@ -46,7 +46,7 @@ const Part3 = ()=>{
    {
      dispatch({type:'DECREMENT'});
      dispatch({type:'SKILLSTATE',payload:selected});
-     dispatch({type:'UPDATESKILLS',payload:suggested});
+     dispatch({type:'UPDATESUGGESTEDSKILLS',payload:suggested});
      dispatch({type:'UPDATEMORESKILLS',payload:moreSkills});
 
 
@@ -55,7 +55,7 @@ const Part3 = ()=>{
    {
      dispatch({type:'INCREMENT'});
      dispatch({type:'SKILLSTATE',payload:selected});
-     dispatch({type:'UPDATESKILLS',payload:suggested});
+     dispatch({type:'UPDATESUGGESTEDSKILLS',payload:suggested});
      dispatch({type:'UPDATEMORESKILLS',payload:moreSkills});
 
 
@@ -120,7 +120,7 @@ return(
                       </div>
                       <div className="modal-footer">
         
-                        <button onClick={()=>{addSkill(tempSkill,tempExp);setdisplay("block");setdisplayS("none");}} id="add" type="button" className="btn btn-primary mb-3 rounded-pill" data-bs-dismiss="modal">Add Experience</button>
+                        <button onClick={()=>{addSkill(tempSkill,tempExp);setdisplay("block");setdisplayS("none");setTempExp(0)}} id="add" type="button" className="btn btn-primary mb-3 rounded-pill" data-bs-dismiss="modal">Add Experience</button>
                       </div>
                     </div>
                   </div>

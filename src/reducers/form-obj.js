@@ -2,10 +2,13 @@ var object = {
     radio1: "1",
     radio2: "2" ,
     university:"",
+    cgpa:"",
+    degree:"",
     transcript:"",
     skills:[],
     salary:"10000",
     name:"",
+    
     email:"",
     password:"",
     
@@ -25,6 +28,16 @@ var object = {
     else if(action.type=="UNIVERSITYSTATE")
     {
         state.university=action.payload;
+        return state;
+    }
+    else if(action.type=="CGPASTATE")
+    {
+        state.cgpa=action.payload;
+        return state;
+    }
+    else if(action.type=="DEGREESTATE")
+    {
+        state.degree=action.payload;
         return state;
     }
     else if(action.type=="TRANSCRIPTSTATE")

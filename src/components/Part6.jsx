@@ -86,6 +86,8 @@ const Part6 = ()=>{
     const{radio1,
       radio2,
       university,
+      cgpa,
+      degree,
       transcript,
       skills,
       salary,
@@ -101,6 +103,8 @@ const Part6 = ()=>{
       radio1,
       radio2,
       university,
+      cgpa,
+      degree,
       transcript,
       skills,
       salary,
@@ -123,7 +127,7 @@ const Part6 = ()=>{
           headers:{
             "Content-type": "application/json"
             },
-          body: JSON.stringify({stateRecommendation}),
+          body: JSON.stringify({stateRecommendation,stateMaintain}),
         
         });
        

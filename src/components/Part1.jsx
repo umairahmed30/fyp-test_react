@@ -12,6 +12,8 @@ const Unexp =(props)=>{
   const transcMaintain=useSelector((state)=>state.transcMaintain);
 
   const [uni,setUni]=useState(stateMaintain.university);
+  const[cgpa,setCgpa]=useState(stateMaintain.cgpa);
+  const [degree,setDegree]=useState(stateMaintain.degree);
 
 
 
@@ -44,8 +46,8 @@ const uploadImage= async(e)=>{
     <>
     <div id="criteria" >
                           <div className="mb-3"  onChange={setUniValue}>
-                          <label className="mb-2" for="ice-cream-choice">Please Enter your University Name <span style={{color:"red"}}>{props.uniErr}</span></label>
-                          <input onChange={(e)=>{setUni(e.target.value)}} className="form-select  rounded-pill" list="university-list" id="ice-cream-choice" name="ice-cream-choice" value={uni} />
+                          <label className="mb-2" for="ice-cream-choice">University Name <span style={{color:"red"}}>{props.uniErr}</span></label>
+                          <input onChange={(e)=>{setUni(e.target.value)}} className="form-control  rounded-pill" list="university-list" id="ice-cream-choice" name="ice-cream-choice" value={uni} />
 
                           <datalist  id="university-list">
                           {universities.map(university => (
@@ -53,12 +55,25 @@ const uploadImage= async(e)=>{
                           ))}
                           </datalist>
                           </div>
+                          <div class="input-group">
+  <span class="input-group-text rounded-pill-custom0">CGPA<span style={{color:"red"}}>{props.cgpaError}</span></span>
+  <input onChange={(e) => {dispatch({type:'CGPASTATE',payload:e.target.value});setCgpa(e.target.value)}} type="text" aria-label="First name" class="form-control" value={cgpa}/>
+  
+  
+  <select onChange={(e) => {dispatch({type:'DEGREESTATE',payload:e.target.value})}} class="form-select rounded-pill-custom1" id="inputGroupSelect01">
+    <option selected>Degree<span style={{color:"red"}}>{props.degreeError}</span></option>
+    <option value="BS Software Engineering">BS Software Engineering</option>
+    <option value="BS Computer Science">BS Computer Science</option>
+    <option value="BS Information Technology">BS Information Technology</option>
+  </select>
+
+</div>
             
              
               <div className="mb-3" style={{display:props.displayInputFile}}>
                 
-                <label className="mb-2" for="myfile">Upload Your Transcript <span style={{color:"red"}}>{props.transErr}</span> </label>
-                <input onChange={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.files[0].name});uploadImage(e)}} className="form-control form-control-sm rounded-pill" type="file" id="myfile" />
+                <label className="mb-2 mt-2" for="myfile">Upload Your Transcript <span style={{color:"red"}}>{props.transErr}</span> </label>
+                <input onChange={(e)=>{dispatch({type:'TRANSCRIPTSTATE',payload:e.target.files[0].name});uploadImage(e)}} className="form-control rounded-pill" type="file" id="myfile" />
                 
   
               </div>
@@ -84,6 +99,9 @@ const dispatch=useDispatch();
 const valr1=["internee","fresher","experienced"];
 const valr2=["anywhere","remote","office"];
 const [uniError,setUniError]=useState("");
+const [cgpaError,setCgpaError]=useState("");
+const [degreeError,setDegreeError]=useState("");
+
 const [transError,setTransError]=useState("");
 const [displayInputFile,setDisplayInputFile]=useState(inputFileDisplay.fileD);
 
@@ -118,6 +136,7 @@ const handleOnChangeRadio2 = (e) => {
   const validateP1 = (e) => {
     if(stateMaintain.radio1!=="experienced")
     {
+      let count=0;
       if(stateMaintain.university==="")
       {
         setUniError("*");
@@ -125,6 +144,25 @@ const handleOnChangeRadio2 = (e) => {
       else
       {
         setUniError("");
+        count++;
+      }
+      if(stateMaintain.cgpa==="")
+      {
+        setCgpaError("*");
+      }
+      else
+      {
+        setCgpaError("");
+        count++;
+      }
+      if(stateMaintain.degree==="")
+      {
+        setDegreeError("*");
+      }
+      else
+      {
+        setDegreeError("");
+        count++
       }
       if(stateMaintain.transcript==="")
       {
@@ -141,23 +179,22 @@ const handleOnChangeRadio2 = (e) => {
         }
         else
         {
+          setTransError("");
+          count++;
           console.log("hello");
           
-          setDisplayInputFile("none");
-          setForceReRender(!forceRerender);
-
-          dispatch({type:'FILEDISPLAY',payload:"none"});
-          dispatch({type:'INCREMENT'});
+          //setForceReRender(!forceRerender);
 
         }
         
 
       }
-      else
+      if(count===4)
       {
       setDisplayInputFile("none");
       dispatch({type:'INCREMENT'})
       }
+      
     }
     else
     {
@@ -195,7 +232,7 @@ const handleOnChangeRadio2 = (e) => {
               </div>
               <br/>
               <form action="">
-              {stateMaintain.radio1===valr1[0]||stateMaintain.radio1===valr1[1]? <Unexp uniErr={uniError} transErr={transError} displayInputFile={displayInputFile} setDisplayInputFile={setDisplayInputFile} setTransError={setTransError}/>:<div/> }
+              {stateMaintain.radio1===valr1[0]||stateMaintain.radio1===valr1[1]? <Unexp uniErr={uniError} transErr={transError} cgpaError={cgpaError} degreeError={degreeError} displayInputFile={displayInputFile} setDisplayInputFile={setDisplayInputFile} setTransError={setTransError}/>:<div/> }
               </form>
 
               <h4>Where do you want to work?</h4>

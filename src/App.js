@@ -5,7 +5,7 @@ import { SignIn } from './components/SignIn';
 import { Route, Switch } from "react-router-dom"; 
 
 import './App.css';
-import Recommendation from './components/Recomm Form/Recommendation';
+import Recommendation from './components/Recomm_Form/Recommendation';
 
 const Routing = () => {
   
