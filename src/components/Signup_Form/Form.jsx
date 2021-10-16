@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { Route } from "react-router";
 import { Switch } from "react-router";
 import { stat } from "fs";
+import logo from "../../Logo/logo1.png";
 
 const Form= ()=>{
     const [pageno,setpageno]=useState(1);
@@ -21,7 +22,7 @@ const Form= ()=>{
     return (
         <>
           <div class="container" >
-              <img src="transparent.png" alt="hello" />
+              <img src={logo} alt="hello" className="w-25" style={{display:"inline"}} />
               <div class="position-relative" >
                   <form id="m-form"  class="form position-absolute mt-5 top-50 start-50 w-50"  method="post" encType="multipart/form-data">
                     {pageNo==1&&<Part1></Part1>}
