@@ -1,7 +1,7 @@
 import react from "react";
 import { useDispatch,useSelector } from "react-redux";
 
-import { incNumber,decNumber } from "../actions";
+import { incNumber,decNumber } from "../../actions";
 import { useState } from "react";
 import { type } from "jquery";
 const Part3 = ()=>{

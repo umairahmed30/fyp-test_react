@@ -118,6 +118,7 @@ const Part6 = ()=>{
       const data = await res.json();
       if(res.status===201)
       {
+        
         const resFile = await fetch("/upload", { 
           method:"Post",
         
@@ -142,7 +143,7 @@ const Part6 = ()=>{
     console.log(err);
   }
   
-    //history.push("/home");
+  history.push("/home");
   }
   }
  

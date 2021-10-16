@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {Form} from './components/Form';
+import {Form} from './components/Signup_Form/Form';
 import reportWebVitals from './reportWebVitals';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';

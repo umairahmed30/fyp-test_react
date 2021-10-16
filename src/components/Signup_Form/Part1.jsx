@@ -2,7 +2,7 @@ import react from "react";
 import { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { connect } from "react-redux";
-import { incNumber,decNumber } from "../actions";
+import { incNumber,decNumber } from "../../actions";
 import { type } from "jquery";
 import { Link } from "react-router-dom";
 const Unexp =(props)=>{
@@ -61,7 +61,7 @@ const uploadImage= async(e)=>{
   
   
   <select onChange={(e) => {dispatch({type:'DEGREESTATE',payload:e.target.value})}} class="form-select rounded-pill-custom1" id="inputGroupSelect01">
-    <option selected>Degree<span style={{color:"red"}}>{props.degreeError}</span></option>
+    <option selected>Degree</option><span style={{color:"red"}}>{props.degreeError}</span>
     <option value="BS Software Engineering">BS Software Engineering</option>
     <option value="BS Computer Science">BS Computer Science</option>
     <option value="BS Information Technology">BS Information Technology</option>
@@ -191,8 +191,10 @@ const handleOnChangeRadio2 = (e) => {
       }
       if(count===4)
       {
+        console.log(count);
       setDisplayInputFile("none");
-      dispatch({type:'INCREMENT'})
+      dispatch({type:'FILEDISPLAY',payload:"none"});
+      dispatch({type:'INCREMENT'});
       }
       
     }
@@ -213,19 +215,19 @@ const handleOnChangeRadio2 = (e) => {
               <div id="radio-1" onChange={handleOnChangeRadio1}>
             <div className="form-check " >
                 <input onClick={()=>{setdisable(false);}} checked={valr1[0]===stateMaintain.radio1}   className="form-check-input " type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={valr1[0]}/>
-                <label className="form-check-label" for="flexRadioDefault">
+                <label className="form-check-label" for="flexRadioDefault1">
                   Internee
                 </label>
               </div>
               <div className="form-check">
                 <input onClick={()=>{setdisable(false);}} checked={valr1[1]===stateMaintain.radio1} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value={valr1[1]}/>
-                <label className="form-check-label" for="flexRadioDefault">
+                <label className="form-check-label" for="flexRadioDefault2">
                   Fresher
                 </label>
               </div>
               <div className="form-check">
                 <input onClick={()=>{setdisable(false);}} checked={valr1[2]===stateMaintain.radio1} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value={valr1[2]}/>
-                <label className="form-check-label" for="flexRadioDefault">
+                <label className="form-check-label" for="flexRadioDefault3">
                   Experienced
                 </label>
               </div>
@@ -239,19 +241,19 @@ const handleOnChangeRadio2 = (e) => {
               <div id="radio-2" onChange={handleOnChangeRadio2}>
               <div className="form-check">
                   <input checked={valr2[0]===stateMaintain.radio2} className="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault4" value="anywhere"/>
-                  <label className="form-check-label" for="flexRadioDefault1">
+                  <label className="form-check-label" for="flexRadioDefault4">
                     Anywhere
                   </label>
                 </div>
                 <div className="form-check">
                   <input checked={valr2[1]===stateMaintain.radio2} className="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault5" value="remote"/>
-                  <label className="form-check-label" for="flexRadioDefault1">
+                  <label className="form-check-label" for="flexRadioDefault5">
                     Remote
                   </label>
                 </div>
                 <div className="form-check">
                   <input checked={valr2[2]===stateMaintain.radio2} className="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault6" value="office"/>
-                  <label className="form-check-label" for="flexRadioDefault1">
+                  <label className="form-check-label" for="flexRadioDefault6">
                     Office
                   </label>
                 </div>

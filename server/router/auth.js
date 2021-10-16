@@ -18,6 +18,36 @@ const User = require("../model/userSchema");
 // }
 
 // })
+const Recommendation=require("../model/recommendationSchema");
+router.post("/rFormData",async (req, res) => {
+  console.log("r form is hit");
+  console.log(req.body);
+  // const { title,
+  //   description,
+  //   skillsRequired,
+  //   minExp,
+  //   jobPlace, } = req.body;
+
+    const recommendation = new Recommendation(req.body);
+
+    // yaha pr password and cpassword ko hash karain gy
+
+    try{
+    const recommendationRegistered = await recommendation.save();
+    if (recommendationRegistered) {
+      res.status(201).json({ message: "User Registered Successfully" });
+    } else {
+      res.status(500).json({ error: "Failed to registered" });
+    }
+}
+ catch (error) {
+  console.log(error);
+}
+
+    res.status(201).json({ message: "Job Registered Successfully" });
+  res.send("R form data");
+});
+
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./transcript"); //important this is a direct path fron our current file to storage location

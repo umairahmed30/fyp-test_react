@@ -5,7 +5,7 @@ import { Part3 } from "./Part3";
 import { Part4 } from "./Part4";
 import { Part5 } from "./Part5";
 import { Part6 } from "./Part6";
-import { Home } from "./Home";
+import { Home } from "../Home";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Route } from "react-router";
@@ -21,6 +21,7 @@ const Form= ()=>{
     return (
         <>
           <div class="container" >
+              <img src="transparent.png" alt="hello" />
               <div class="position-relative" >
                   <form id="m-form"  class="form position-absolute mt-5 top-50 start-50 w-50"  method="post" encType="multipart/form-data">
                     {pageNo==1&&<Part1></Part1>}
