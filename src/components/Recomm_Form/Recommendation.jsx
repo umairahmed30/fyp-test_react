@@ -14,6 +14,8 @@ const Recommendation = () => {
   const[cgpa,setCgpa]=useState();
   const [degree,setDegree]=useState();
 
+  const[iName,setIName]=useState("");
+
 
   const [questions,setQuestions]=useState([]);
   let today = new Date();
@@ -93,41 +95,62 @@ const Recommendation = () => {
   
     }, []);
 
-    const formData = new FormData();
-    formData.append("user_id",userId);
+    //const formData = new FormData();
+    let formdata={"user_id":userId,
+                  "instructor":iName,
+                  "answer":[]};
+let answer=[]
+    formdata.user_id=userId;
     const add_data=(e,id)=>{
-      formData.delete(id);
-      formData.append(id, e.target.value);
-      //console.log(formData);
-      console.log(id);
-      for (var value of formData.values()) {
-        console.log(value);
-     }
-    };
-    function formDataToJson(formData) {
-      const obj = {};
-      formData.forEach((value, key) => { 
-          obj[key] = value
+      answer= answer.filter(function( obj ) {
+        return obj.qid !== id;
+    });
+    
+      answer.unshift({
+        "qid":id,
+       "answer":e.target.value
+
       });
-      return JSON.stringify(obj);
-  }
+      console.log(formdata);
+    //   formData.delete(id);
+    //   formData.append(id, e.target.value);
+    //   //console.log(formData);
+    //   console.log(id);
+    //   for (var value of formData.values()) {
+    //     console.log(value);
+    //  }
+    };
+  //   function formDataToJson(formData) {
+  //     const obj = {};
+  //     formData.forEach((value, key) => { 
+  //         obj[key] = value
+  //     });
+  //     return JSON.stringify(obj);
+  // }
     
     const send_recomm_data=async (e)=>{
       e.preventDefault();
-      
+      formdata.answer=answer;
       const res = await fetch("/rFormData", {
         method: "POST",
        
          headers: {
           "Content-Type": "application/json"
         },
-        body: formDataToJson(formData),
+        body:JSON.stringify(formdata),
       });
-  if(res.status===201)
-  {
-      history.push("/thankyou");
-  }
       
+      try {
+            const data = await res.json();
+            if(res.status===201)
+            {
+                history.push("/thankyou");
+            }
+        }
+      catch(err)
+        {
+          console.log(err);
+        } 
 
     }
 
@@ -154,14 +177,14 @@ const Recommendation = () => {
              <h5>CGPA:{cgpa}</h5>
             </div>
             <div className="col-12">
-             <a href="/" className="btn btn-primary" type="button" download={transcript}><FiDownload /> Download Students Transcript</a>
+             <a href="/logo192.png" className="btn btn-primary" type="button" download><FiDownload /> Download Students Transcript</a>
             </div>
             <div className="col-6">
               <div className="form-field">
                 <label htmlFor="" className="label">
                   Instructor Name
                 </label>
-                <input
+                <input onChange={(e)=>{setIName(e.target.value);console.log(iName)}}
                   type="text"
                   className="custom-input"
                   placeholder="Name"
@@ -216,31 +239,7 @@ const Recommendation = () => {
                 </>
 ))}
                 </div>
-                <div className="col-12">
-              <div className="form-field">
-              <h4 >Attendance</h4>
-              <div id="radio-1">
-            <div className="form-check " >
-                <input  className="form-check-input ms-1 " type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                <label className="form-check-label ms-1" for="flexRadioDefault">
-                  Excellent
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input ms-1" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                <label className="form-check-label ms-1" for="flexRadioDefault">
-                  Good
-                </label>
-              </div>
-              <div className="form-check">
-                <input  className="form-check-input ms-1" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
-                <label className="form-check-label ms-1" for="flexRadioDefault">
-                  Fair
-                </label>
-              </div>
-              </div>
-              </div>
-            </div>
+             
             <div className="col-12">
               <div className="form-field">
                 <label htmlFor="" className="label">

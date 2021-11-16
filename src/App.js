@@ -6,8 +6,10 @@ import { SignIn } from './components/SignIn';
 import { Route, Switch } from "react-router-dom"; 
 import Navbar from './components/Navbar';
 import { ThankYou } from './components/thankYou';
+import { Main } from './components/Main';
 import './App.css';
 import Recommendation from './components/Recomm_Form/Recommendation';
+import ProminentAppBar from './components/NavbarH';
 
 const Routing = () => {
   
@@ -30,6 +32,9 @@ const Routing = () => {
       </Route>
       <Route path="/recommendation/:email">
         <Recommendation/>
+      </Route>
+      <Route path="/main">
+        <Main/>
       </Route>
 
      

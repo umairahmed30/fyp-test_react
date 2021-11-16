@@ -6,7 +6,16 @@ import {
   makeStyles,
   Avatar,
 } from "@material-ui/core";
+import Stack from '@mui/material/Stack';
+import { AiOutlineHome} from 'react-icons/ai';
+import{RiLogoutBoxRLine} from 'react-icons/ri';
+import {IoIosLogOut} from 'react-icons/io';
+import {MdLogout} from 'react-icons/md';
+import {CgProfile} from 'react-icons/cg';
+import {FiHome} from 'react-icons/fi';
+
 import { useHistory } from "react-router-dom";
+import logo from "../Logo/logo_white.png";
 import Image from "material-ui-image";
 
 //import isAuth, { userType } from "../lib/isAuth";
@@ -40,7 +49,7 @@ const Navbar = (props) => {
       <Toolbar color="DC1A22">
         
         <Typography  variant="h6" className={classes.title}>
-          Tech Hiring Hub
+          <img src={logo} alt="logo" className="w-25"/>
         </Typography>
         {/* {isAuth() ? (
           userType() === "recruiter" ? (
@@ -66,8 +75,10 @@ const Navbar = (props) => {
             </>
           ) : ( */}
             <>
+            <Stack spacing={2} direction="row">
+             
               <Button color="inherit" onClick={() => handleClick("/home")}>
-                Home
+                <FiHome  size={28}></FiHome>
               </Button>
               <Button
                 color="inherit"
@@ -76,11 +87,12 @@ const Navbar = (props) => {
                 Applications
               </Button>
               <Button color="inherit" onClick={() => handleClick("/profile")}>
-                Profile
+                <CgProfile size={28}></CgProfile>
               </Button>
               <Button color="inherit" onClick={() => handleClick("/logout")}>
-                Logout
+                <MdLogout size={28}></MdLogout>
               </Button>
+              </Stack>
             </>
           {/* )
         ) : (
@@ -95,6 +107,7 @@ const Navbar = (props) => {
         )} */}
       </Toolbar>
     </AppBar>
+    
   );
 };
 

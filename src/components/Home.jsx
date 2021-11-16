@@ -123,7 +123,7 @@ const [jobList,setJobList]=useState([]);
     <>
         
       
-        <div className="mt-5 container row">
+        <div className="mt-5-c container row">
 {jobList.map(job => (
   <div className="col-sm-9 m-1 p-2">
   <div className="card">

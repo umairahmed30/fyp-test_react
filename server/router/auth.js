@@ -21,31 +21,31 @@ const User = require("../model/userSchema");
 const Recommendation=require("../model/recommendationSchema");
 router.post("/rFormData",async (req, res) => {
   console.log("r form is hit");
-  console.log(req.body);
+  console.log(req.body[0]);
   // const { title,
   //   description,
   //   skillsRequired,
   //   minExp,
   //   jobPlace, } = req.body;
+ const answer=req.body;
+ console.log(answer);
+    const recommendation = new Recommendation({
+      answer});
 
-    const recommendation = new Recommendation(req.body);
-
-    // yaha pr password and cpassword ko hash karain gy
-
+     
     try{
-    const recommendationRegistered = await recommendation.save();
-    if (recommendationRegistered) {
-      res.status(201).json({ message: "User Registered Successfully" });
-    } else {
-      res.status(500).json({ error: "Failed to registered" });
+        const recommendationRegistered = await recommendation.save();
+        if (recommendationRegistered) {
+          res.status(201).json({ message: "User Registered Successfully" });
+        } else {
+          res.status(500).json({ error: "Failed to registered" });
+        }
     }
-}
  catch (error) {
-  console.log(error);
-}
+    console.log(error);
+  }
 
-    res.status(201).json({ message: "Job Registered Successfully" });
-  res.send("R form data");
+    //res.status(201).json({ message: "answer Registered Successfully" });
 });
 
 const fileStorageEngine = multer.diskStorage({
@@ -130,6 +130,16 @@ router.get("/getquestion",async(req,res)=>{
   const questions = await Question.find();
   res.send(questions); 
 });
+
+
+const City =require("../model/citySchema");
+router.get("/getcity",async(req,res)=>{
+  const cities = await City.find({country:req.query.country}).limit(5);
+ console.log("city is hit");
+  res.send(cities); 
+});
+
+
 
 
 

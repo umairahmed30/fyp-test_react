@@ -1,6 +1,6 @@
 #m-form
 {
-    border-radius: 10px;
+    /* border-radius: 10px; */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
@@ -23,14 +23,27 @@ background-size: cover;
 .mt-4 {
 margin-top: 2rem!important;
 }
+.MuiAppBar-colorPrimary {
+  color: #FFE;
+  background-color: #003580!important;
+}
 .form-check-input:checked {
-  background-color: #E60023;
-  border-color: #E60023;
+  background-color: #003580;
+  border-color: #003580;
+}
+.w-25 {
+  width: 20%!important;
+}
+.w-75 {
+  width: 70%!important;
+}
+.mt-5-c {
+  margin-top: 10rem!important;
 }
 .btn-primary {
   color: #fff;
-  background-color: #1877F2;
-  border-color: #1877F2;
+  background-color: #003580;
+  border-color: #003580;
 }
 
 .rounded-pill-custom0 {

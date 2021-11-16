@@ -1,10 +1,15 @@
 import react from "react";
+import ReactDOM from "react-dom";
 import { useState } from "react";
+import { useEffect } from 'react';
 import { useDispatch,useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { incNumber,decNumber } from "../../actions";
 import { type } from "jquery";
 import { Link } from "react-router-dom";
+import Button from "@restart/ui/esm/Button";
+import TagsInput from "../tagsinput";
+import MultipleSelectChips from "../chip";
 const Unexp =(props)=>{
   const dispatch=useDispatch();
 
@@ -14,7 +19,7 @@ const Unexp =(props)=>{
   const [uni,setUni]=useState(stateMaintain.university);
   const[cgpa,setCgpa]=useState(stateMaintain.cgpa);
   const [degree,setDegree]=useState(stateMaintain.degree);
-
+  
 
 
   
@@ -104,28 +109,58 @@ const [degreeError,setDegreeError]=useState("");
 
 const [transError,setTransError]=useState("");
 const [displayInputFile,setDisplayInputFile]=useState(inputFileDisplay.fileD);
+const [cities,setCities]=useState();
+const [showCity,setShowCity]=useState(false);
+
+function get_cities_data()
+{
+  async function getIP(){
+    const response = await fetch('http://api.ipify.org/?format=json');
+    const data = await response.json();
+    return data;
+    }
+    getIP().then(data => {
+        fetch(`http://ip-api.com/json/${data.ip}`)
+        .then( res => res.json())
+        .then(response => {
+          fetch(`/getcity?country=${response.country}`, {
+            method: 'GET',
+            
+          })
+          .then(response => response.json())
+          .then(result => {
+            console.log('Success:', result);
+            setCities(result);
+            
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+              
+              })
+        .catch((data, status) => {
+          console.log('Request failed:', data);
+        });
+
+    });
 
 
-// const uploadImage= async(e)=>{
-//   e.preventDefault();
-
-//   let formdata=new FormData();
-//   formdata.append("userfile", e.target.files[0]);
-
+}
   
-//   const res = await fetch("/upload", { 
-//     method:"Post",
-//     body:formdata,
+
+useEffect(() => {
+    //for ip
+    
+   
   
-//   })
-  
-// }
+ 
+},[])
 
 const handleOnChangeRadio1 = (e) => {
    dispatch({type:'RADIO1STATE',payload:e.target.value});
    dispatch({type:'NEXT1-1'});
    setForceReRender(!forceRerender);
-  
+   
 
 }
 const handleOnChangeRadio2 = (e) => {
@@ -133,6 +168,8 @@ const handleOnChangeRadio2 = (e) => {
   dispatch({type:'NEXT1-2'});
   setForceReRender(!forceRerender);
   }
+
+
   const validateP1 = (e) => {
     if(stateMaintain.radio1!=="experienced")
     {
@@ -204,11 +241,14 @@ const handleOnChangeRadio2 = (e) => {
       dispatch({type:'INCREMENT'})
     }
     }
-
+    function handleSelecetedTags(items) {
+      console.log(items);
+    }
 
 
   return(
     <>
+    {get_cities_data()}
        <div id="part-1" className="p-5" >
               <h2 className="text-center">Let's Start!</h2>
               <h4 >Are you?</h4>
@@ -252,15 +292,30 @@ const handleOnChangeRadio2 = (e) => {
                   </label>
                 </div>
                 <div className="form-check">
-                  <input checked={valr2[2]===stateMaintain.radio2} className="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault6" value="office"/>
+                  <input onClick={()=>{setShowCity(true)}} checked={valr2[2]===stateMaintain.radio2} className="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault6" value="office"/>
                   <label className="form-check-label" for="flexRadioDefault6">
                     Office
                   </label>
                 </div>
+                <div className="form-check">
+          
+                
+               
+                
+                
+                
+              
+                {showCity?<div>hello</div>:<div/>}
+                {showCity?cities.map(city=>(
+                    <button className="btn btn-outline-primary mt-2 rounded-pill me-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">{city.city}</button>
+                )) 
+                :<div/>}
+                  
+                </div>
                 </div>
 
                 
-              <button onClick={(e)=>{validateP1(e)}} id="btn-1" type="button" className="btn btn-primary rounded-pill mt-4" disabled={nextButton.next1[0]&&nextButton.next1[1]?false:true} >Next</button>
+              <button onClick={(e)=>{validateP1(e)}} id="btn-1" type="button" className="btn btn-primary mt-4" disabled={nextButton.next1[0]&&nextButton.next1[1]?false:true} >Next</button>
               </div>
 
 
