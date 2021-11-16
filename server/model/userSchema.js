@@ -26,6 +26,10 @@ const userSchema = new mongooose.Schema({
     type: String,
     required: false,
   },
+  cities:{
+    type:[],
+    required:true,
+  },
   skills: {
     type: [{}] ,
     required: true,

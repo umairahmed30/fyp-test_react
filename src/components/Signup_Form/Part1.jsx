@@ -106,7 +106,7 @@ const valr2=["anywhere","remote","office"];
 const [uniError,setUniError]=useState("");
 const [cgpaError,setCgpaError]=useState("");
 const [degreeError,setDegreeError]=useState("");
-
+const [selectedCity,setSelectedCity]=useState([]);
 const [transError,setTransError]=useState("");
 const [displayInputFile,setDisplayInputFile]=useState(inputFileDisplay.fileD);
 const [cities,setCities]=useState();
@@ -151,7 +151,7 @@ function get_cities_data()
 useEffect(() => {
     //for ip
     
-   
+    get_cities_data();
   
  
 },[])
@@ -231,6 +231,7 @@ const handleOnChangeRadio2 = (e) => {
         console.log(count);
       setDisplayInputFile("none");
       dispatch({type:'FILEDISPLAY',payload:"none"});
+      dispatch({type:'CITYSTATE',payload:selectedCity});
       dispatch({type:'INCREMENT'});
       }
       
@@ -238,6 +239,7 @@ const handleOnChangeRadio2 = (e) => {
     else
     {
       setDisplayInputFile("none");
+      dispatch({type:'CITYSTATE',payload:selectedCity});
       dispatch({type:'INCREMENT'})
     }
     }
@@ -248,7 +250,7 @@ const handleOnChangeRadio2 = (e) => {
 
   return(
     <>
-    {get_cities_data()}
+    
        <div id="part-1" className="p-5" >
               <h2 className="text-center">Let's Start!</h2>
               <h4 >Are you?</h4>
@@ -307,11 +309,16 @@ const handleOnChangeRadio2 = (e) => {
               
                 {showCity?<div>hello</div>:<div/>}
                 {showCity?cities.map(city=>(
-                    <button className="btn btn-outline-primary mt-2 rounded-pill me-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">{city.city}</button>
+                    <button onClick={()=>setSelectedCity(oldArray => [...oldArray, city.city])} className="btn btn-outline-primary mt-2 rounded-pill me-2" type="button" >{city.city}</button>
                 )) 
                 :<div/>}
                   
                 </div>
+                <div className="form-check">
+                  {selectedCity.map(city=>(<button className="btn btn-outline-success mt-2 rounded-pill me-2">{city}</button>))}
+
+                </div>
+
                 </div>
 
                 

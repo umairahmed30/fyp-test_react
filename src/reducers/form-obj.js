@@ -5,6 +5,7 @@ var object = {
     cgpa:"",
     degree:"",
     transcript:"",
+    cities:[],
     skills:[],
     salary:"10000",
     name:"",
@@ -38,6 +39,11 @@ var object = {
     else if(action.type=="DEGREESTATE")
     {
         state.degree=action.payload;
+        return state;
+    }
+    else if(action.type=="CITYSTATE")
+    {
+        state.cities=action.payload;
         return state;
     }
     else if(action.type=="TRANSCRIPTSTATE")
