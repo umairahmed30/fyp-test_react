@@ -20,13 +20,48 @@ const fetchIcon = (count, size) => {
   }
   return icons[count];
 };
+delete L.Icon.Default.prototype._getIconUrl;
 
-const cuffs = new L.Icon({
-  iconUrl: "/handcuffs.svg",
-  iconSize: [25, 25],
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
+
 function ShowCrimes({ data }) {
+  const [cityDetail,setCityDetail]=useState([]);
+  function for_users(){
+        fetch(`/getUsers`, {
+          method: 'GET',
+          
+        })
+        .then(response => response.json())
+        .then(result => {
+          result.map(user=>(user.cities.map(city=>(
+            fetch(`/getLongLat?city=${city}`, {
+              method: 'GET',
+              
+            })
+            .then(response => response.json())
+            .then(result => {
+              console.log('Success:', result);
+              setCityDetail(oldArray => [...oldArray, result]);
+              
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            })
+          ))
+          
+          ));
+          
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+}
+
   const cities=[{name:"lahore",long:"31.520370",lat:"74.358749"},
                 {name:"gujranwala",long:" 32.16408",lat:"74.18422 "},
                 {name:"gujranwala",long:" 32.16408",lat:"74.18422 "},
@@ -67,6 +102,7 @@ function ShowCrimes({ data }) {
   }, [map]);
 
   useEffect(() => {
+    for_users();
     map.on("move", onMove);
     return () => {
       map.off("move", onMove);
@@ -85,14 +121,14 @@ function ShowCrimes({ data }) {
   //   },
   // }));
 
-  const points=cities.map((city)=>({
+  const points=cityDetail.map((city)=>({
      type: "Feature",
      properties: { cluster: false,cityName:city.name },
       geometry: {
         type: "Point",
         coordinates: [
+          parseFloat(city.lng),
           parseFloat(city.lat),
-          parseFloat(city.long),
         ],
       },    
 
@@ -143,11 +179,14 @@ function ShowCrimes({ data }) {
 
         // we have a single point (crime) to render
         return (
-          <Marker
+          <>
+          {/* <Marker
             key={`crime-${cluster.properties.cityName}`}
             position={[latitude, longitude]}
-            icon={cuffs}
-          />
+            
+          /> */}
+          <Marker position={[latitude, longitude]} />
+          </>
         );
       })}
     </>

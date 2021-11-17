@@ -139,7 +139,17 @@ router.get("/getcity",async(req,res)=>{
   res.send(cities); 
 });
 
+router.get("/getLongLat",async(req,res)=>{
+  const long_lat = await City.find({city:req.query.city});
+ const city={
+   name:req.query.city,
+   lat:long_lat[0].lat,
+   lng:long_lat[0].lng,
+ };
+ console.log(city);
 
+  res.send(city); 
+});
 
 
 
@@ -148,6 +158,11 @@ router.get("/getcity",async(req,res)=>{
 router.post("/findUser",async(req,res)=>{
   const email=req.body.email;
   const users = await User.find({email:email});
+  res.send(users); 
+});
+
+router.get("/getUsers",async(req,res)=>{
+  const users = await User.find();
   res.send(users); 
 });
 
@@ -210,7 +225,6 @@ router.post("/home",async(req,res)=>{
   
 
 });
-
 
 
 

@@ -222,8 +222,8 @@ export default function ProminentAppBar() {
       </Typography>
       <Stack direction="row" spacing={2}>
         <button className="btn btn-success" style={{mystyle}}>Job Post</button>
-       <button className="btn btn-light">Sign IN</button>
-       <button className="btn btn-light">Register</button>
+       <button className="btn btn-light" href="/signin">Sign IN</button>
+       <button className="btn btn-light" href="/">Register</button>
       
     </Stack>
     

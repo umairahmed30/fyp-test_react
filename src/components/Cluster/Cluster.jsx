@@ -1,9 +1,10 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import 'leaflet/dist/leaflet.css';
 
 
-export default function App() {
+export default function Map_S() {
   return (
     <MapContainer
       className="markercluster-map"
