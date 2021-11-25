@@ -100,6 +100,7 @@ import Stack from '@mui/material/Stack';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useHistory } from "react-router-dom";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import './NavbarH.css'
@@ -209,23 +210,25 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function ProminentAppBar() {
+ const history = useHistory();
     const classes = useStyles();
     const mystyle = {
       width:"210%",
     };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <StyledToolbar>
+      <AppBar  position="static">
+        <StyledToolbar className="container">
         <Typography  variant="h6" className={classes.title}>
-             <img src={logo} alt="logo" className="w-25"/>
+             <img src={logo} alt="logo" className="w-25-i mt-1 ms-1-i"/>
       </Typography>
       <Stack direction="row" spacing={2}>
         <button className="btn btn-success" style={{mystyle}}>Job Post</button>
-       <button className="btn btn-light" href="/signin">Sign IN</button>
-       <button className="btn btn-light" href="/">Register</button>
+       <button className="btn btn-light" onClick={()=>{history.push('/signin')}}>Sign IN</button>
+       <button className="btn btn-light" onClick={()=>{history.push('/')}}>Register</button>
       
     </Stack>
+ 
     
          
         

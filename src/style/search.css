@@ -1,0 +1,63 @@
+.jumbotron {
+    
+    height: 450px;
+    background: url("../Logo/coding.jpg") no-repeat center center; 
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 132%;
+    color: white;
+  }
+
+  search-sec{
+    padding: 2rem;
+}
+.search-slt{
+    display: block;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #55595c;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    height: calc(3rem + 10px) !important;
+    border-radius:0 !important;
+}
+.form-control
+{
+    border: 5px solid #FEBB02 !important;
+
+}
+.btn-search {
+    color: #fff;
+    background-color: #005EA9 !important;
+    /* border-color: #FEBB02 !important; */
+    border: 5px solid #FEBB02 !important;
+}
+.btn-search:hover{
+    background-color:#FEBB02  !important;
+}
+.wrn-btn{
+    width: 50%;
+    color: white !important;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    height: calc(3rem + 10px) !important;
+    border-radius:0 !important;
+}
+
+@media (min-width: 992px){
+    .search-sec{
+        position: relative;
+        /* top: -114px; */
+        
+    }
+}
+
+@media (max-width: 992px){
+    .search-sec{
+        background: #1A4668;
+    }
+}

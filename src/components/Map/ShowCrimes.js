@@ -77,7 +77,7 @@ function ShowCrimes({ data }) {
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
   const map = useMap();
-
+  //var map = L.map('map', { attributionControl:false });
   // get map bounds
   function updateMap() {
 
