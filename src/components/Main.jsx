@@ -35,13 +35,13 @@ const Main= ()=>{
           
      
         />
-       
+       <div className="container">
         <Filter></Filter>
 
         <QueryClientProvider client={queryClient}>
       <Map />
     </QueryClientProvider>
-     
+     </div>
 
         </>
     )

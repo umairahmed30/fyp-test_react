@@ -4,6 +4,10 @@ import "./ShowCrimes.css";
 import useSupercluster from "use-supercluster";
 import { Marker, useMap } from "react-leaflet";
 import Geocode from "react-geocode";
+import {GiPositionMarker} from 'react-icons/gi';
+import location from "../../Logo/location-icon-png-4250.png";
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
 
 // set response language. Defaults to english.
 Geocode.setLanguage("en");
@@ -20,16 +24,17 @@ const fetchIcon = (count, size) => {
   }
   return icons[count];
 };
-delete L.Icon.Default.prototype._getIconUrl;
+// delete L.Icon.Default.prototype._getIconUrl;
 
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-});
+// L.Icon.Default.mergeOptions({
+//     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+//     iconUrl: require('leaflet/dist/images/marker-icon.png'),
+//     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+// });
 
 
 function ShowCrimes({ data }) {
+  
   const [cityDetail,setCityDetail]=useState([]);
   function for_users(){
         fetch(`/getUsers`, {
@@ -185,7 +190,7 @@ function ShowCrimes({ data }) {
             position={[latitude, longitude]}
             
           /> */}
-          <Marker position={[latitude, longitude]} />
+          <Marker position={[latitude, longitude]}  icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}   />
           </>
         );
       })}
