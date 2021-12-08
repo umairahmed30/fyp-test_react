@@ -23,8 +23,11 @@ const SignIn= ()=>{
               password,
           
         })
-        })
-        history.push("/home");
+        });
+        if(res.status==200)
+        {
+          history.push("/home");
+        }
       }
      
     return (

@@ -7,6 +7,7 @@ import { Route, Switch } from "react-router-dom";
 import Navbar from './components/Navbar';
 import { ThankYou } from './components/thankYou';
 import { Main } from './components/Main';
+import { Logout } from './components/logout';
 import './App.css';
 import Recommendation from './components/Recomm_Form/Recommendation';
 import ProminentAppBar from './components/NavbarH';
@@ -36,18 +37,24 @@ const Routing = () => {
       <Route path="/main">
         <Main/>
       </Route>
+      <Route path="/logout">
+        <Logout/>
+      </Route>
 
      
 
       
     </Switch>
+
     </>
   )
 }
 
 function App() {
   return (
+    <>
   <Routing></Routing>
+</>
   );
 }
 

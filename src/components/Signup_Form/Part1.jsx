@@ -136,6 +136,8 @@ function get_cities_data()
           .catch(error => {
             console.error('Error:', error);
           });
+       
+
               
               })
         .catch((data, status) => {
@@ -144,8 +146,27 @@ function get_cities_data()
 
     });
 
+  }
+  
+  const displaySkills=(val)=>
+  {
+    console.log("display skills");   
+    //for all cities
+       fetch(`/getcities?val=${val}`, {
+        method: 'GET',
+        
+      })
+      .then(response => response.json())
+      .then(result => {
+        console.log('Success:', result);
+        setCities(result);
+        
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
 
-}
+  }
   
 
 useEffect(() => {
@@ -299,6 +320,7 @@ const handleOnChangeRadio2 = (e) => {
                     Office
                   </label>
                 </div>
+               
                 <div className="form-check">
           
                 
@@ -307,7 +329,10 @@ const handleOnChangeRadio2 = (e) => {
                 
                 
               
-                {showCity?<div>hello</div>:<div/>}
+                {showCity?<div>
+                  <input id="search" onKeyUp={(e)=>displaySkills(e.target.value)}  className="form-control me-2 mb-3 rounded-pill " type="search" placeholder="Search" aria-label="Search"/>
+
+                </div>:<div/>}
                 {showCity?cities.map(city=>(
                     <button onClick={()=>setSelectedCity(oldArray => [...oldArray, city.city])} className="btn btn-outline-primary mt-2 rounded-pill me-2" type="button" >{city.city}</button>
                 )) 

@@ -67,21 +67,15 @@ function ShowCrimes({ data }) {
         });
 }
 
-  const cities=[{name:"lahore",long:"31.520370",lat:"74.358749"},
-                {name:"gujranwala",long:" 32.16408",lat:"74.18422 "},
-                {name:"gujranwala",long:" 32.16408",lat:"74.18422 "},
-
-                {name:"lahore",long:"31.520170",lat:"74.358009"},
-                {name:"karchi",long:"24.860735",lat:"67.001137"},
-                {name:"karchi",long:"24.860735",lat:"67.001137"},
-                {name:"karchi",long:"24.860735",lat:"67.001137"}
-                  ];
+ 
   
 
   const maxZoom = 22;
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
   const map = useMap();
+  //map.attributionControl.setPrefix('');
+  map.attributionControl=false;
   //var map = L.map('map', { attributionControl:false });
   // get map bounds
   function updateMap() {
@@ -169,6 +163,8 @@ function ShowCrimes({ data }) {
               )}
               eventHandlers={{
                 click: () => {
+                  console.log(supercluster.getLeaves(cluster.id,Infinity));
+
                   const expansionZoom = Math.min(
                     supercluster.getClusterExpansionZoom(cluster.id),
                     maxZoom

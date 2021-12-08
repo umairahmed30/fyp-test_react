@@ -36,3 +36,6 @@
     transform: rotate(360deg);
   }
 }
+.markercluster-map {
+  height: 90vh;
+}

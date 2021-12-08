@@ -12,6 +12,8 @@ import Map from "./Map/Map";
 import Map_S from "./Cluster/Cluster"
 import { QueryClient, QueryClientProvider } from "react-query";
 import {SearchBar} from "./search";
+import {Footer} from './Footer';
+
 const queryClient = new QueryClient();
 
 const Main= ()=>{
@@ -42,6 +44,7 @@ const Main= ()=>{
       <Map />
     </QueryClientProvider>
      </div>
+     <Footer></Footer>
 
         </>
     )

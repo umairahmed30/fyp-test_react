@@ -6,10 +6,15 @@ import react from "react";
 
  const Filter= ()=>{
 
-
-    function valuetext(value) {
+    const [value, setValue] = react.useState();
+    function valuetext(value){
         return `${value}°C`;
+        
       }
+      const val_func=(event, newValue) => {
+        setValue(newValue);
+        console.log(value);
+      };
 
     
      
@@ -27,8 +32,10 @@ import react from "react";
       <Slider
         aria-label="Temperature"
         defaultValue={30}
+        value={value}
         getAriaValueText={valuetext}
         valueLabelDisplay="auto"
+        onChange={val_func}
         step={10}
         marks
         min={10}

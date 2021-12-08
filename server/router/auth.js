@@ -3,7 +3,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const multer = require("multer");
 var nodemailer = require('nodemailer');
-//const upload = multer();
+const { requireAuth, checkUser } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 require("../db/conn");
@@ -138,6 +138,15 @@ router.get("/getcity",async(req,res)=>{
  console.log("city is hit");
   res.send(cities); 
 });
+
+router.get("/getcities",async(req,res)=>{
+  const cities = await City.find({city : {$regex : req.query.val,$options: 'i' }}).limit(5);
+ console.log("cities is hit");
+  res.send(cities); 
+});
+
+
+
 
 router.get("/getLongLat",async(req,res)=>{
   const long_lat = await City.find({city:req.query.city});
@@ -346,7 +355,7 @@ router.post("/login", async (req, res) => {
       // Generate cookies
       res.cookie("jwtoken", token, {
         expires: new Date(Date.now() + 25892000000),
-        httpOnly: true,
+        // httpOnly: true,
       });
       // if (!userlogin)
       if (!isMatch)
