@@ -5,6 +5,7 @@ import skillsManage from "./skills";
 import transcMaintain from "./forTransc";
 import stateRecommendation from "./forRecommendations";
 import inputFileDisplay from "./display";
+import filterState from "./filters";
 
 import { combineReducers } from "redux";
 const rootReducer=combineReducers({
@@ -15,6 +16,7 @@ const rootReducer=combineReducers({
     transcMaintain,
     stateRecommendation,
     inputFileDisplay,
+    filterState,
 })
 
 export default rootReducer;

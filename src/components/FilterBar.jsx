@@ -1,21 +1,27 @@
-import react from "react";
+import react,{useEffect, useState} from "react";
  import '../style/filter.css'
  import Box from '@mui/material/Box';
  import Slider from '@mui/material/Slider';
  import Typography from '@mui/material/Typography';
+ import { useDispatch,useSelector } from "react-redux";
 
- const Filter= ()=>{
+ const Filter= (props)=>{
+  const filterState=useSelector((state)=>state.filterState);
+  const dispatch=useDispatch();
 
-    const [value, setValue] = react.useState();
+    const [value, setValue] = useState();
     function valuetext(value){
         return `${value}°C`;
         
       }
       const val_func=(event, newValue) => {
-        setValue(newValue);
-        console.log(value);
+        props.setSal(newValue);
+        console.log(props.sal);
       };
+useEffect(()=>{
+  dispatch({type:'SALARYFILTER',payload:props.sal});
 
+});
     
      
     return (
@@ -31,15 +37,15 @@ import react from "react";
       </Typography>
       <Slider
         aria-label="Temperature"
-        defaultValue={30}
+        defaultValue={10000}
         value={value}
         getAriaValueText={valuetext}
         valueLabelDisplay="auto"
         onChange={val_func}
-        step={10}
+        step={10000}
         marks
-        min={10}
-        max={110}
+        min={10000}
+        max={100000}
       />
     </Box>
     <div class="py-2 border-bottom ml-3">
@@ -59,10 +65,10 @@ import react from "react";
         defaultValue={30}
         getAriaValueText={valuetext}
         valueLabelDisplay="auto"
-        step={10}
+        step={1}
         marks
-        min={10}
-        max={110}
+        min={0}
+        max={10}
       />
     </Box>
         {/* <div id="orange"><span class="fa fa-minus"></span></div>

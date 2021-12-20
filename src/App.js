@@ -11,6 +11,7 @@ import { Logout } from './components/logout';
 import './App.css';
 import Recommendation from './components/Recomm_Form/Recommendation';
 import ProminentAppBar from './components/NavbarH';
+import ShowCandidates from './components/ShowCandidates';
 
 const Routing = () => {
   
@@ -36,6 +37,9 @@ const Routing = () => {
       </Route>
       <Route path="/main">
         <Main/>
+      </Route>
+      <Route path="/showcandidates">
+        <ShowCandidates/>
       </Route>
       <Route path="/logout">
         <Logout/>

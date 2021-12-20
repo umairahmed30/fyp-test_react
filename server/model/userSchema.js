@@ -27,7 +27,7 @@ const userSchema = new mongooose.Schema({
     required: false,
   },
   cities:{
-    type:[],
+    type:[{}],
     required:true,
   },
   skills: {
@@ -74,8 +74,8 @@ userSchema.methods.generateAuthToken = async function () {
   try {
     let token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET_KEY);
     this.tokens = this.tokens.concat({ token: token });
-    await this.save();
-    console.log(token);
+    //await this.save();
+    //console.log(token);
     return token;
   } catch (error) {
     console.log(error);

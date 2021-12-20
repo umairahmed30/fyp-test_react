@@ -333,14 +333,14 @@ const handleOnChangeRadio2 = (e) => {
                   <input id="search" onKeyUp={(e)=>displaySkills(e.target.value)}  className="form-control me-2 mb-3 rounded-pill " type="search" placeholder="Search" aria-label="Search"/>
 
                 </div>:<div/>}
-                {showCity?cities.map(city=>(
-                    <button onClick={()=>setSelectedCity(oldArray => [...oldArray, city.city])} className="btn btn-outline-primary mt-2 rounded-pill me-2" type="button" >{city.city}</button>
+                {showCity?cities.map(citi=>(
+                    <button onClick={()=>setSelectedCity(oldArray => [...oldArray, {city:citi.city,lng:citi.lng,lat:citi.lat}])} className="btn btn-outline-primary mt-2 rounded-pill me-2" type="button" >{citi.city}</button>
                 )) 
                 :<div/>}
                   
                 </div>
                 <div className="form-check">
-                  {selectedCity.map(city=>(<button className="btn btn-outline-success mt-2 rounded-pill me-2">{city}</button>))}
+                  {selectedCity.map(city=>(<button className="btn btn-outline-success mt-2 rounded-pill me-2">{city.city}</button>))}
 
                 </div>
 

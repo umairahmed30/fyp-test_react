@@ -1,7 +1,10 @@
 import Cookies from 'js-cookie';
+import jwt from 'jwt-decode';
 
 const isAuth = () => {
-return Cookies.get('jwtoken')
+  //const user = jwt( Cookies.get('jwtoken'));
+  //console.log(user); 
+  return Cookies.get('jwtoken');
 
   };
   

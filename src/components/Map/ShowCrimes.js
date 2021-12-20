@@ -6,8 +6,10 @@ import { Marker, useMap } from "react-leaflet";
 import Geocode from "react-geocode";
 import {GiPositionMarker} from 'react-icons/gi';
 import location from "../../Logo/location-icon-png-4250.png";
-import markerIconPng from "leaflet/dist/images/marker-icon.png"
-import {Icon} from 'leaflet'
+import markerIconPng from "leaflet/dist/images/marker-icon.png";
+import {Icon} from 'leaflet';
+import { useDispatch,useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 // set response language. Defaults to english.
 Geocode.setLanguage("en");
@@ -33,40 +35,31 @@ const fetchIcon = (count, size) => {
 // });
 
 
-function ShowCrimes({ data }) {
-  
+function ShowCrimes(props) {
+  const history = useHistory();
+  const dispatch=useDispatch();
   const [cityDetail,setCityDetail]=useState([]);
+  const [candidates,setCandidates]=useState([]);
+  const city=[];
+  const userCity=[];
+  
   function for_users(){
-        fetch(`/getUsers`, {
+        fetch(`/getUsers?sal=${props.sal}`, {
           method: 'GET',
           
         })
         .then(response => response.json())
         .then(result => {
-          result.map(user=>(user.cities.map(city=>(
-            fetch(`/getLongLat?city=${city}`, {
-              method: 'GET',
-              
+          setCandidates(result);
+          console.log(candidates);
+          result.map(user=>(user.cities.map(city=>{
+            userCity.push(city);
             })
-            .then(response => response.json())
-            .then(result => {
-              console.log('Success:', result);
-              setCityDetail(oldArray => [...oldArray, result]);
-              
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            })
-          ))
-          
+           
           ));
-          
+          setCityDetail(userCity);
         })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-}
-
+  }
  
   
 
@@ -97,11 +90,18 @@ function ShowCrimes({ data }) {
   }, [map]);
 
   React.useEffect(() => {
+    
     updateMap();
   }, [map]);
-
-  useEffect(() => {
+  useEffect(()=>{
+    console.log("showcrime rerender");
+    setCityDetail([]);
     for_users();
+    console.log(cityDetail);
+  },[props.sal]);
+  
+  useEffect(() => {
+   
     map.on("move", onMove);
     return () => {
       map.off("move", onMove);
@@ -120,14 +120,14 @@ function ShowCrimes({ data }) {
   //   },
   // }));
 
-  const points=cityDetail.map((city)=>({
+  const points=cityDetail.map((detail)=>({
      type: "Feature",
-     properties: { cluster: false,cityName:city.name },
+     properties: { cluster: false,cityName:detail.city },
       geometry: {
         type: "Point",
         coordinates: [
-          parseFloat(city.lng),
-          parseFloat(city.lat),
+          parseFloat(detail.lng),
+          parseFloat(detail.lat),
         ],
       },    
 
@@ -144,6 +144,7 @@ function ShowCrimes({ data }) {
 
   return (
     <>
+    
       {clusters.map((cluster) => {
         // every cluster point has coordinates
         const [longitude, latitude] = cluster.geometry.coordinates;
@@ -163,8 +164,13 @@ function ShowCrimes({ data }) {
               )}
               eventHandlers={{
                 click: () => {
+                  
+  dispatch({type:'CITIES',payload:supercluster.getLeaves(cluster.id,Infinity)});
+                  
                   console.log(supercluster.getLeaves(cluster.id,Infinity));
-
+                  props.setLocation(city);
+                  console.log(props.location);
+                  console.log(city);
                   const expansionZoom = Math.min(
                     supercluster.getClusterExpansionZoom(cluster.id),
                     maxZoom
@@ -172,6 +178,7 @@ function ShowCrimes({ data }) {
                   map.setView([latitude, longitude], expansionZoom, {
                     animate: true,
                   });
+                  history.push('/showcandidates');
                 },
               }}
             />

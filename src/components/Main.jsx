@@ -38,7 +38,7 @@ const Main= ()=>{
      
         />
        <div className="container">
-        <Filter></Filter>
+        {/* <Filter></Filter> */}
 
         <QueryClientProvider client={queryClient}>
       <Map />

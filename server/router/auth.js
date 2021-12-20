@@ -148,17 +148,32 @@ router.get("/getcities",async(req,res)=>{
 
 
 
-router.get("/getLongLat",async(req,res)=>{
-  const long_lat = await City.find({city:req.query.city});
- const city={
-   name:req.query.city,
-   lat:long_lat[0].lat,
-   lng:long_lat[0].lng,
- };
- console.log(city);
+// router.get("/getLongLat",async(req,res)=>{
+//   const long_lat = await City.find({city:req.query.city});
+//  const city={
+//    name:req.query.city,
+//    lat:long_lat[0].lat,
+//    lng:long_lat[0].lng,
+//  };
+//  //console.log(city);
 
-  res.send(city); 
-});
+//   res.send(city); 
+// });
+
+// router.post("/getLongLat",async(req,res)=>{
+//   const cities=req.body.userCity;
+//   const long_lat=[]
+//   cities.map(async(citi)=>{
+//     const result=await City.findOne({city:citi});
+//     await long_lat.push(result);
+//     console.log(result);
+//   });
+  
+//   console.log("post long lat hit");
+//   console.log(long_lat);
+//   res.status(200).send(long_lat); 
+ 
+// });
 
 
 
@@ -170,9 +185,35 @@ router.post("/findUser",async(req,res)=>{
   res.send(users); 
 });
 
+
 router.get("/getUsers",async(req,res)=>{
-  const users = await User.find();
-  res.send(users); 
+  try{
+  const users = await User.find({salary:{$gte:req.query.sal}});
+  res.send(users);
+  }
+  catch(error)
+  { console.log(error);
+
+  } 
+});
+
+router.post("/getUsers",async(req,res)=>{
+  try{
+  const sal=req.body.salary;
+  const cityDetails=req.body.cityDetails;
+  mycities=[]
+  cityDetails.map(detail=>mycities.push(detail.properties.cityName));
+  console.log(mycities);
+  const users = await User.find({salary:{$gt:sal},cities:{$elemMatch:{city:{$in:mycities}}}});
+  
+  console.log("candidates"+users);
+ res.send(users).status(200);
+}
+catch(error)
+{
+  console.log(error);
+}
+
 });
 
 
@@ -345,22 +386,29 @@ router.post("/login", async (req, res) => {
 
     if (userLogin) {
       const isMatch = await bcrypt.compare(password, userLogin.password);
-
+        // Generate Web Tokens for security
+        const token = await userLogin.generateAuthToken();
+        console.log(token);
     
-      // Generate Web Tokens for security
-      const token = await userLogin.generateAuthToken();
-      console.log(token);
-
-
-      // Generate cookies
-      res.cookie("jwtoken", token, {
-        expires: new Date(Date.now() + 25892000000),
-        // httpOnly: true,
-      });
+     
       // if (!userlogin)
       if (!isMatch)
+      {
+      
       res.status(400).json({ error: "Invalid login Credentials pass" });
-   else res.json({ message: "User Signin Successfully" });
+      }
+      else
+      { 
+       
+ 
+ 
+       // Generate cookies
+       res.cookie("jwtoken", token, {
+         expires: new Date(Date.now() + 25892000000),
+         // httpOnly: true,
+       });
+        res.json({ message: "User Signin Successfully" });
+      }
     } else {
       res.status(400).json({ error: "Invalid login Credentials" });
     }

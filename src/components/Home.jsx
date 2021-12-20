@@ -11,7 +11,7 @@ import { FiDownload } from 'react-icons/fi';
 import Navbar from './Navbar'
 import { Redirect } from "react-router-dom";
 import Cookies from 'js-cookie';
-import isAuth from '../lib/isAuth'
+import isAuth from '../lib/isAuth';
 
 const Home =()=>{
   const [loggedin, setLoggedin] = useState(isAuth());
