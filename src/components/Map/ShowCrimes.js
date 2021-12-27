@@ -8,7 +8,7 @@ import {GiPositionMarker} from 'react-icons/gi';
 import location from "../../Logo/location-icon-png-4250.png";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import {Icon} from 'leaflet';
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch,useSelector,shallowEqual } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // set response language. Defaults to english.
@@ -41,13 +41,21 @@ function ShowCrimes(props) {
   const [cityDetail,setCityDetail]=useState([]);
   const [candidates,setCandidates]=useState([]);
   const city=[];
+  const [sal,setSal]=useState(props.sal);
   const userCity=[];
-  
+  const [skill,setSkill]=useState("javascript");
   function for_users(){
-        fetch(`/getUsers?sal=${props.sal}`, {
-          method: 'GET',
+        // fetch(`/getUserstest?sal=${props.sal}&skill=${skill}`, {
+        //   method: 'GET',
           
-        })
+        // })
+        fetch(`/getUserstest`, {
+        method:"Post",
+        headers:{
+        "Content-type": "application/json"
+        },
+        body: JSON.stringify({props,skill})
+      })
         .then(response => response.json())
         .then(result => {
           setCandidates(result);
@@ -98,7 +106,7 @@ function ShowCrimes(props) {
     setCityDetail([]);
     for_users();
     console.log(cityDetail);
-  },[props.sal]);
+  },[props.sal,props.skills]);
   
   useEffect(() => {
    

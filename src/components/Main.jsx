@@ -1,4 +1,4 @@
-import react from "react";
+import react, { useState,useEffect } from "react";
 // import App from "./Map/App";
 import NavbarH from "./NavbarH";
 import Filter from "./FilterBar";
@@ -13,21 +13,26 @@ import Map_S from "./Cluster/Cluster"
 import { QueryClient, QueryClientProvider } from "react-query";
 import {SearchBar} from "./search";
 import {Footer} from './Footer';
+import { useDispatch,useSelector, shallowEqual } from "react-redux";
+
 
 const queryClient = new QueryClient();
 
 const Main= ()=>{
 
+  const filterState=useSelector((state)=>state.filterState,shallowEqual);
 
 
-
-    
+useEffect(()=>{
+  console.log("map rerenders in redux change");
+});    
      
     return (
         <>
         {/* <NavbarH></NavbarH> */}
         <ProminentAppBar/>
         <SearchBar></SearchBar>
+        <h1>{filterState.salary}</h1>
         <FormControlLabel
           value="end"
           control={<Switch color="primary" />}

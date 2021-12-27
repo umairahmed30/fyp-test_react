@@ -6,22 +6,40 @@ import react,{useEffect, useState} from "react";
  import { useDispatch,useSelector } from "react-redux";
 
  const Filter= (props)=>{
-  const filterState=useSelector((state)=>state.filterState);
-  const dispatch=useDispatch();
-
+    const filterState=useSelector((state)=>state.filterState);
+    const dispatch=useDispatch();
     const [value, setValue] = useState();
     function valuetext(value){
         return `${value}°C`;
-        
       }
-      const val_func=(event, newValue) => {
+    const val_func=(event, newValue) => {
         props.setSal(newValue);
         console.log(props.sal);
       };
-useEffect(()=>{
-  dispatch({type:'SALARYFILTER',payload:props.sal});
+    const handleSkillFilter=(event)=>{
+        let skillsArr =props.skills ;
+        let check = event.target.checked;
+        let skill_check = event.target.value;
+        if(check){
+            
+                props.setSkills(oldArray=>[...oldArray,skill_check])
+            
+        }else{ 
+            var index = skillsArr.indexOf(skill_check);
+           
+           
+                skillsArr.splice(index, 1);
+                props.setSkills([...skillsArr]);
+             
+        }
+    }
+    useEffect(()=>{
+      dispatch({type:'SALARYFILTER',payload:props.sal});
+      dispatch({type:'SKILLSFILTER',payload:props.skills});
 
-});
+
+      console.log(props.skills);
+    },[props.sal,props.skills]);
     
      
     return (
@@ -59,18 +77,15 @@ useEffect(()=>{
     </div>
     <div class="py-2 border-bottom ml-3">
         <h6 class="font-weight-bold">Experience</h6>
-        <Box className="border-bottom pb-2 ml-3 mt-2" >
-        <Slider
-        aria-label="Temperature"
-        defaultValue={30}
-        getAriaValueText={valuetext}
-        valueLabelDisplay="auto"
-        step={1}
-        marks
-        min={0}
-        max={10}
-      />
-    </Box>
+       
+        <form>
+            <div class="form-group"> <input  type="checkbox" id="25off" value="internee"/> <label for="25">Internee</label> </div>
+            <div class="form-group"> <input type="checkbox" id="5off" value="fresher"/> <label for="5off" id="off" >Fresher</label> </div>
+            <div class="form-group"> <input type="checkbox" id="5off" value="experience"/> <label for="5off" id="off" >Experience</label> </div>
+
+        </form>
+    
+   
         {/* <div id="orange"><span class="fa fa-minus"></span></div>
         <form>
             <div class="form-group"> <input type="checkbox" id="tea"/> <label for="tea">Tea Cakes</label> </div>
@@ -84,8 +99,8 @@ useEffect(()=>{
         <h6 class="font-weight-bold">Skills</h6>
         <div id="orange"><span class="fa fa-minus"></span></div>
         <form>
-            <div class="form-group"> <input type="checkbox" id="25off"/> <label for="25">25% off</label> </div>
-            <div class="form-group"> <input type="checkbox" id="5off"/> <label for="5off" id="off">5% off on artisan breads</label> </div>
+            <div class="form-group"> <input onClick={handleSkillFilter} type="checkbox" id="25off" value="javascript"/> <label for="25">Javascript</label> </div>
+            <div class="form-group"> <input onClick={handleSkillFilter} type="checkbox" id="5off" value="react"/> <label for="5off" id="off" >React JS</label> </div>
         </form>
     </div>
 </section>

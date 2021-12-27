@@ -188,8 +188,60 @@ router.post("/findUser",async(req,res)=>{
 
 router.get("/getUsers",async(req,res)=>{
   try{
+    console.log("post get users");
+  const skill=req.query.skill;
+
+  console.log(skill);
+
   const users = await User.find({salary:{$gte:req.query.sal}});
   res.send(users);
+  }
+  catch(error)
+  { console.log(error);
+
+  } 
+});
+
+//testing
+router.post("/getUserstest",async(req,res)=>{
+  try{
+    console.log("get users test");
+  
+
+  console.log(req.body.skill);
+  console.log(req.body.props);
+  var conditions= {}; // declare the query object
+  var and_clauses=[]; // filter the search by any criteria given by the user
+  if((req.body.props.skills).length > 0){ // if the criteria has a value or values
+    and_clauses.push({'skills':{$elemMatch:{language:{$in:req.body.props.skills}}}});
+    // add to the query object
+  }
+  
+  if(req.body.props.sal){ // if the criteria has a value or values
+    console.log("yes sal is available");
+    and_clauses.push({'salary':{$gte:req.body.props.sal}});  
+    // add to the query object
+  }
+  
+  
+
+
+  
+if(and_clauses.length > 0){ 
+  conditions['$and'] = and_clauses; // filter the search by any criteria given by the user
+}
+
+  const users = await User.find(conditions,
+    function(err, users) {
+        if (err){
+            console.log(err);
+            res.status(500).send(err);
+        }else{
+            console.log(users);
+            res.status(200).send(users);
+        }
+});
+  
   }
   catch(error)
   { console.log(error);
@@ -204,10 +256,31 @@ router.post("/getUsers",async(req,res)=>{
   mycities=[]
   cityDetails.map(detail=>mycities.push(detail.properties.cityName));
   console.log(mycities);
-  const users = await User.find({salary:{$gt:sal},cities:{$elemMatch:{city:{$in:mycities}}}});
+  var conditions= {}; // declare the query object
+  var and_clauses=[]; // filter the search by any criteria given by the user
+  and_clauses.push({'salary':{$gte:sal},'cities':{$elemMatch:{city:{$in:mycities}}}})
+  if((req.body.skills).length > 0){ // if the criteria has a value or values
+    and_clauses.push({'skills':{$elemMatch:{language:{$in:req.body.skills}}}});
+    // add to the query object
+  }
+
+  if(and_clauses.length > 0){ 
+  conditions['$and'] = and_clauses; // filter the search by any criteria given by the user
+}
+
+const users = await User.find(conditions,
+  function(err, users) {
+      if (err){
+          console.log(err);
+          res.status(500).send(err);
+      }else{
+          console.log(users);
+          res.status(200).send(users);
+      }
+});
+
+
   
-  console.log("candidates"+users);
- res.send(users).status(200);
 }
 catch(error)
 {
@@ -324,11 +397,19 @@ router.post("/register", async (req, res) => {
       // yaha pr password and cpassword ko hash karain gy
 
       const userRegistered = await user.save();
+      const token = await userRegistered.generateAuthToken();
+      console.log(token);
+      
 
       //res.status(201).json({ message: "User Registered Successfully" });
 
 
       if (userRegistered) {
+         // Generate cookies
+       res.cookie("jwtoken", token, {
+        expires: new Date(Date.now() + 25892000000),
+        // httpOnly: true,
+      });
         res.status(201).json({ message: "User Registered Successfully" });
       } else {
         res.status(500).json({ error: "Failed to registered" });

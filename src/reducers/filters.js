@@ -19,12 +19,23 @@ var filter = {
   const filterState=(state=filter,action)=>{
     if(action.type=="SALARYFILTER")
     {
-        state.salary=action.payload;
-        return state;
+        return {
+            // Copy the whole state
+            ...state,
+            salary:action.payload
+            
+          }
+        // state.salary=action.payload;
+        // return state;
     }
     else  if(action.type=="CITIES")
     {
         state.cityDetails=action.payload;
+        return state;
+    }
+    else  if(action.type=="SKILLSFILTER")
+    {
+        state.skills=action.payload;
         return state;
     }
     
